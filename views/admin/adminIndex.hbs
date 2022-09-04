@@ -1,0 +1,75 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-10">
+            <canvas id="myLineChart" style="width:100%;max-width:700px;margin-top:10rem"></canvas>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", charts)
+    function charts() {
+        axios.get('/admin/orderChart').then((orders) => {
+            var result = [];
+            orders.data.reduce(function (acc, curr) {
+                if (!acc[curr.createdAt.slice(0, 10)]) {
+                    acc[curr.createdAt.slice(0, 10)] = { date: curr.createdAt.slice(0, 10), count: 0 };
+                    result.push(acc[curr.createdAt.slice(0, 10)])
+                }
+                acc[curr.createdAt.slice(0, 10)].count += 1
+                return acc
+            }, {});
+            var xValues = [];
+            var yValues = [];
+            result.map((curr) => {
+                xValues.push(curr.date)
+                yValues.push(parseInt(curr.count))
+            })
+            new Chart("myLineChart", {
+                type: "line",
+                data: {
+                    labels: xValues,
+                    datasets: [{
+                        fill: false,
+                        lineTension: 0,
+                        backgroundColor: "rgba(0,0,255,1.0)",
+                        borderColor: "green",
+                        data: yValues
+                    }
+                    ]
+                },
+                options: {
+                    legend: { display: false },
+                    scales: {
+                        yAxes: [{ ticks: { min: 0, max: 10} }],
+                    }
+                }
+            });
+        })
+    }
+
+</script>

@@ -1,0 +1,141 @@
+<section class="order_details section_gap">
+	<div class="container">
+		<h3 class="title_confirmation">Order Details</h3>
+		<div class="row order_d_inner">
+			<div class="col-lg-4">
+				<div class="details_item">
+					<h4>Order Info</h4>
+					<ul class="list">
+						{{!-- <li><a href="#"><span>Order number</span> : 60235</a></li> --}}
+						<li><a href="#"><span>Date</span> : {{date orderDetails.createdAt}}</a></li>
+						<li><a href="#"><span>Total</span> : {{orderDetails.totalamount}}</a></li>
+						<li><a href="#"><span>Payment method</span> : {{orderDetails.payment}}</a></li>
+						<li><a href="#" style="color : green"><span>Order Status</span> : {{uppercase
+								orderDetails.status}}</a></li>
+						<li><a href="#"><span>{{uppercase orderDetails.status}}</span> : {{date
+								orderDetails.updatedAt}}</a></li>
+					</ul>
+				</div>
+			</div>
+			{{!-- <div class="col-lg-4">
+				<div class="details_item">
+					<h4>Billing Address</h4>
+					<ul class="list">
+						<li><a href="#"><span>Street</span> : 56/8</a></li>
+						<li><a href="#"><span>City</span> : Los Angeles</a></li>
+						<li><a href="#"><span>Country</span> : United States</a></li>
+						<li><a href="#"><span>Postcode </span> : 36952</a></li>
+					</ul>
+				</div>
+			</div> --}}
+			<div class="col-lg-4">
+				<div class="details_item">
+					<h4>Shipping Address</h4>
+					<ul class="list">
+						<li><a href="#"><span>House</span> : {{orderDetails.address.house}}</a></li>
+						<li><a href="#"><span>Street</span> : {{orderDetails.address.street}}</a></li>
+						<li><a href="#"><span>District</span> : {{orderDetails.address.city}}</a></li>
+						<li><a href="#"><span>state </span> : {{orderDetails.address.state}}</a></li>
+						<li><a href="#"><span>Pincode</span> : {{orderDetails.address.pincode}}</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="col-lg-4">
+				<div class="details_item">
+					<h4>Shipping From</h4>
+					<ul class="list">
+						<li><span></span>  adidas AG</li>
+						<li><span></span>  Adi-Dassler-Strasse 1</li>
+						<li><span></span>  91074 Herzogenaurach/li>
+						<li><span></span>  Germany</li>
+						<li><a href=""><span>Contact</span>: +49 9132 84 0</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="order_details_table">
+			<h2>Order Details</h2>
+			<div class="table-responsive">
+				<table class="table">
+					<thead>
+						<tr>
+							<th scope="col">Product</th>
+							<th scope="col">Quantity</th>
+							<th scope="col">Total</th>
+						</tr>
+					</thead>
+					<tbody>
+						{{#each orderDetails.products}}
+						<tr>
+							<td>
+								<p>{{ this.productid.productName}}</p>
+							</td>
+							<td>
+								<h5>x {{this.quantity}}</h5>
+							</td>
+							<td>
+								<p>${{total productid.price quantity}}.00</p>
+							</td>
+						</tr>
+						{{/each}}
+						{{!-- <tr>
+							<td>
+								<p>Pixelstore fresh Blackberry</p>
+							</td>
+							<td>
+								<h5>x 02</h5>
+							</td>
+							<td>
+								<p>$720.00</p>
+							</td>
+						</tr> --}}
+						{{!-- <tr>
+							<td>
+								<p>Pixelstore fresh Blackberry</p>
+							</td>
+							<td>
+								<h5>x 02</h5>
+							</td>
+							<td>
+								<p>$720.00</p>
+							</td>
+						</tr> --}}
+						<tr>
+							<td>
+								<h4>Subtotal</h4>
+							</td>
+							<td>
+								<h5></h5>
+							</td>
+							<td>
+								<p>${{subTotal orderDetails.products}}.00</p>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<h4>discount</h4>
+							</td>
+							<td>
+								<h5></h5>
+							</td>
+							<td>
+								<p>{{orderDetails.discount}} %</p>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<h4>Total</h4>
+							</td>
+							<td>
+								<h5></h5>
+							</td>
+							<td>
+								<p>${{orderDetails.totalamount}}.00</p>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</section>

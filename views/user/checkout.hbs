@@ -1,0 +1,361 @@
+
+<script src="/js/vendor/jquery-2.2.4.min.js"></script>
+
+<section class="checkout_area section_gap" style="margin-top:10rem ;">
+    <div class="container">
+        <div class="billing_details">
+            <div class="row">
+                <div class="col-lg-8">
+                    <h3>Billing Details</h3>
+                    <form class="row contact_form" action="/addAddress" id="addressvalidation" method="post" novalidate="novalidate">
+                        <div class="col-md-6 form-group p_star">
+                            <input type="text" class="form-control" id="first" name="firstName"
+                                placeholder="First name">
+                            {{!-- <span class="placeholder" data-placeholder="First name"></span> --}}
+                        </div>
+                        <div class="col-md-6 form-group p_star">
+                            <input type="text" class="form-control" id="last" name="lastName" placeholder="Last name">
+                            {{!-- <span class="placeholder" data-placeholder="Last name"></span> --}}
+                        </div>
+                        {{!-- <div class="col-md-12 form-group">
+                            <input type="text" class="form-control" id="company" name="company"
+                                placeholder="Company name">
+                        </div> --}}
+                        <div class="col-md-6 form-group p_star">
+                            <input type="text" class="form-control" id="number" name="mobileNumber"
+                                placeholder="Phone Number">
+                            {{!-- <span class="placeholder" data-placeholder="Phone number"></span> --}}
+                        </div>
+                        {{!-- <div class="col-md-6 form-group p_star">
+                            <input type="text" class="form-control" id="email" name="compemailany"
+                                placeholder="Email Address">
+                            <span class="placeholder" data-placeholder="Email Address"></span>
+                        </div> --}}
+                        {{!-- <div class="col-md-12 form-group p_star">
+                            <select class="country_select">
+                                <option value="1">Country</option>
+                                <option value="2">Country</option>
+                                <option value="4">Country</option>
+                            </select>
+                        </div> --}}
+                        <div class="col-md-12 form-group p_star">
+                            <input type="text" class="form-control" id="add1" name="house" placeholder="Address">
+                            {{!-- <span class="placeholder" data-placeholder="Address line 01"></span> --}}
+                        </div>
+                        <div class="col-md-12 form-group p_star">
+                            <input type="text" class="form-control" id="add2" name="street" placeholder="Street">
+                            {{!-- <span class="placeholder" data-placeholder="Address line 01"></span> --}}
+                        </div>
+                        {{!-- <div class="col-md-12 form-group p_star">
+                            <input type="text" class="form-control" id="add2" name="add2">
+                            <span class="placeholder" data-placeholder="Address line 02"></span>
+                        </div> --}}
+                        <div class="col-md-12 form-group p_star">
+                            <input type="text" class="form-control" id="city" name="city" placeholder="Town/City">
+                            {{!-- <span class="placeholder" data-placeholder="Town/City"></span> --}}
+                        </div>
+                        <div class="col-md-12 form-group p_star">
+                            <input type="text" class="form-control" id="state" name="state"
+                                placeholder="state">
+                            {{!-- <span class="placeholder" data-placeholder="Town/City"></span> --}}
+                        </div>
+                        {{!-- <div class="col-md-12 form-group p_star">
+                            <select class="country_select">
+                                <option value="1">District</option>
+                                <option value="2">District</option>
+                                <option value="4">District</option>
+                            </select>
+                        </div> --}}
+                        <div class="col-md-12 form-group">
+                            <input type="number" class="form-control" id="zip" name="pincode" placeholder="Postcode/ZIP">
+                        </div>
+                        {{!-- <div class="col-md-12 form-group">
+                            <div class="creat_account">
+                                <input type="checkbox" id="f-option2" name="selector">
+                                <label for="f-option2">Create an account?</label>
+                            </div>
+                        </div> --}}
+                        <div class="col-md-12 form-group">
+                            <button type="submit" class="btn btn-dark">Add</button>
+                        </div>
+
+                    </form>
+                    
+                    {{#each address}}
+                    
+                    <div class="col-md-12 form-group">
+                        {{!-- address card --}}
+
+                        <div class="card" style="width: 18rem; background: #e5ecee">
+
+                            <div class="card-body">
+                                
+                                <input value="{{this._id}}" type="radio" id="addressid" name="address" checked>
+                                <label for="f-option3" style="color: black;">Select Address</label>
+                                <a href="/deleteAddress/{{this._id}}"style="color:rgb(242, 109, 8);"><i class="bi bi-trash"></i></a>
+                                <h5 class="card-title">{{this.firstName }} {{this.lastName}}</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">{{mobileNumber}}</h6>
+                                <p class="card-text"style="color: black;">{{this.house}},{{this.street}},{{this.city}},{{this.state}},{{this.pincode}}</p>
+                                {{!-- <a href="#" class="card-link">Card link</a>
+                                <a href="#" class="card-link">Another link</a> --}}
+                            </div>
+                        </div>
+
+                        {{!-- <div class="creat_account">
+                            <h3>Shipping Details</h3>
+
+                        </div>
+                        <textarea class="form-control" name="message" id="message" rows="1"
+                            placeholder="Order Notes"></textarea> --}}
+                    </div>
+                    {{/each}}
+                </div>
+                <div class="col-lg-4">
+                    <div class="order_box">
+                        <h2>Your Order</h2>
+                        <ul class="list">
+                            <li><a href="#">Product <span>Total</span></a></li>
+                            {{#each data.product}}
+                            <li><a href="#"> {{this.productid.productName}}<span class="middle">x
+                                        {{this.quantity}}</span> <span class="last">{{total this.quantity
+                                        this.productid.price}}</span></a></li></span></a></li>
+                            {{!-- <li><a href="#">Fresh Tomatoes <span class="middle">x 02</span> <span
+                                        class="last">$720.00</span></a></li>
+                            <li><a href="#">Fresh Brocoli <span class="middle">x 02</span> <span
+                                        class="last">$720.00</span></a></li> --}}
+                            {{/each}}
+                        </ul>
+                        <ul class="list list_2">
+                            <li><a href="#">Subtotal <span>${{subTotal data.product}}.00</span></a></li>
+                           
+                            <li><a href="#">Coupon Discount <span>{{discount}} </span></a></li>
+                            <li><a href="#">Total <span>${{totalamount}}.00</span>%</a></li>
+                        </ul>
+                        <div class="payment_item">
+                            <div class="radion_btn">
+                                <input value="cod" type="radio" id="f-option5" name="payment" checked>
+                                <label for="f-option5">Cash On Delivery</label>
+                                <div class="check"></div>
+                            </div>
+                            <p>Please send a check to Store Name, Store Street, Store Town, Store State / County,
+                                Store Postcode.</p>
+                        </div>
+                            <input type="hidden" value="{{data._id}}" name="cartid">
+                            <input type="hidden" value="{{totalamount}}" name="totalamount">
+                        <div class="payment_item active">
+                            <div class="radion_btn">
+                                <input value="onlinePayment" type="radio" id="f-option6" name="payment" >
+                                <label for="f-option6">Online Payment</label>
+                                <img src="img/product/card.jpg" alt="">
+                                <div class="check"></div>
+                            </div>
+                            <p>Pay via PayPal; you can pay with your credit card if you don’t have a PayPal
+                                account.</p>
+                        </div>
+                        <div class="creat_account">
+                            <input type="checkbox" id="f-option4" name="selector">
+                            <label for="f-option4">I’ve read and accept the </label>
+                            <a href="#">terms & conditions*</a>
+                        </div>
+                        <button style="border: 0;" onclick="goaxios('{{data._id}}','{{totalamount}}','{{discount}}')">Proceed to Paypal</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+    
+
+
+<script>
+
+const razorpay = (order)=>{
+    console.log(order+ 'razorpay in')
+    let amount = order.amount*100
+    var options = {
+    "key": "rzp_test_0uMlGrIgmDbph4", // Enter the Key ID generated from the Dashboard
+    "amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+    "currency": "INR",
+    "name": "adidas",
+    "description": "Test Transaction",
+    "image": "https://example.com/your_logo",
+    "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+    "handler": function (response){
+         verifypayment(response,order)
+
+    },
+    "prefill": {
+        "name": "Gaurav Kumar",
+        "email": "gaurav.kumar@example.com",
+        "contact": "9999999999"
+    },
+    "notes": {
+        "address": "Razorpay Corporate Office"
+    },
+    "theme": {
+        "color": "#3399cc"
+    }
+};
+var rzp1 = new Razorpay(options);
+rzp1.on('payment.failed', function (response){
+        alert(response.error.code);
+        alert(response.error.description);
+        alert(response.error.source);
+        alert(response.error.step);
+        alert(response.error.reason);
+        alert(response.error.metadata.order_id);
+        alert(response.error.metadata.payment_id);
+});
+    rzp1.open();
+}
+    
+
+function goaxios(cartid,totalamount,discount){
+    console.log(totalamount)
+    console.log(discount)
+    let address = $("input[type='radio'][name='address']:checked").val();
+    let paymentmethod = $("input[type='radio'][name='payment']:checked").val();
+    console.log(address,paymentmethod)
+    axios.post('/checkoutorder',{
+        address : address,
+        payment : paymentmethod,
+        totalamount : totalamount,
+        cartid : cartid,
+        discount : discount
+    }).then((e)=>{
+        console.log(e)
+        if(paymentmethod==="cod"){
+            console.log(e+"payment")
+            location.href=`/order/${e.data._id}`
+        }
+        else{
+            console.log(e.data+"payment online else case")
+            razorpay(e.data)
+        }
+    })
+}
+
+
+
+   const verifypayment = (response,order)=>{
+    console.log(response,order)
+        axios.post('/verifypayment',{
+            response,
+            order
+        }).then((e)=>{
+            if(e.data.status){
+                location.href=`/order/${order.receipt}`
+            }else{
+                alert('machane nadanilla')
+            }
+    })
+}
+</script>
+
+
+
+    <script>
+ $().ready(function () {
+ 
+            $("#addressvalidation").validate({
+                // in 'rules' user have to specify all the constraints for respective fields
+                rules: {
+                    firstName: {
+                        required:true
+                        },
+                    lastName: {
+                        required:true
+                        },
+                    mobileNumber: {
+                        required: true,
+                         minlength:10,
+                         maxlength:10
+                    },
+                    house: {
+                        required: true,
+                        minlength: 3
+                    },
+                    street: {
+                        required: true,
+                        minlength: 3,
+                    },
+                    city: {
+                        required: true,
+                        minlength: 3,
+                    },
+                    state: {
+                    required:true,
+                    minlength:3,
+                    },
+                    pincode: {
+                        required: true,
+                        minlength: 6,
+                        maxlength: 6
+                    },
+                    agree: "required"
+                },
+                // in 'messages' user have to specify message as per rules
+                messages: {
+                    firstName:{
+                        required: 'enter firstname'
+                    },
+                    lastName: {
+                        required:"enter lastname"
+                        },
+                    mobileNumber: {
+                        required:'enter your mobile number',
+                        minlength:'enter 10 digits',
+                        maxlength:'more than 10'
+                    },
+                    house: {
+                        required: " please fill up this feild",
+                        minlength: " Your password must be consist of at least 3 characters"
+                    },
+                    street: {
+                        required: " please fill up this feild",
+                        minlength: " Your  must be consist of at least 3 characters",
+            
+                    },
+                    city:{
+                        required:" please fill up this feild",
+                        minlength: " Your  must be consist of at least 3 characters",
+                    },
+                    state:{
+                        required:" please fill up this feild",
+                        minlength: " Your  must be consist of at least 3 characters",
+                    },
+                    pincode: {
+                        required: " please fill up this feild",
+                        minlength: " Your  must be consist of at least 6 characters",
+                        maxlength: " Your  must be consist of at least 6 characters"
+                    },
+                    agree: "Please accept our policy"
+                }
+            });
+        });
+    
+    {{!-- $().ready(function () {
+        $("#addressvalidation").validate({
+            rules: {
+
+            }
+             messages: {
+
+             }
+        })
+    }) --}}
+
+
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+
+
+
+   
+ 
+
+

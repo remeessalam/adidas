@@ -1,0 +1,63 @@
+<div class='container-fluid' style="margin-top:10rem ;">
+        {{!-- <div class="card mx-auto col-md-6 col-10 mt-5"> --}}
+            <h3 class=" m-5">edit product</h3>
+            {{!-- <img class='mx-auto img-thumbnail'
+                src="https://i.imgur.com/pjITBzX.jpg"
+                width="auto" height="auto"/> --}}
+            <div class="card-body text-center mx-auto">
+                 <form class="p-1" action="/admin/editproduct/{{data._id}}" method="post"  enctype="multipart/form-data">
+                 
+                 <div class="row">
+                    
+                    
+                    <div class="col md-6">
+                       
+                    <label for="text">Product Name</label>
+                    <input type="text" name="productName" class="form-control mb-1" value="{{data.productName}}">
+                    <label for="text">Price</label>
+                    <input type="text" name="price" class="form-control mb-1" value="{{data.price}}">
+                    <label for="text">Color </label>
+                    <input type="text" name="color" class="form-control mb-1" value="{{data.color}}"> 
+                    <label for="text">Brand</label>
+                    <input type="text" name="brand" class="form-control mb-1" value="{{data.brand}}"> 
+                    {{!-- <label for="text">Type shoe</label>                  
+                    <input type="text" name="typeshoe" class="form-control mb-1" value="{{data.typeshoe}}">  --}}
+                    {{!-- <select name="category" class="form-control" placeholder="category">
+                    <option name="category" value="category">category</option>
+                    {{#each data}}
+                    <option name="sports" >{{this.category}}</option>
+                    {{/each}}
+                    </select>               --}}
+                    {{!-- <a href="#" class="btn btn-dark" name="btnAddMore" data-toggle="modal" data-target="#addcategory">add category</a>               --}}
+                    </div>
+                    <div class="col md-6">
+                      
+                    <label for="text">Quantity</label>                 
+                    <input type="text" name="quantity" class="form-control mb-1" value="{{data.quantity}}"> 
+                    <label for="text">About</label>
+                    <input type="text" name="about" class="form-control mb-1" value="{{data.about}}" placeholder="{{data.about}}">    
+                    <div class="row">
+                    <div class="col md-2"> 
+                    <img style="width:10rem;height:10rem" class="p-2" src="/productsimage/{{data._id}}.jpg" alt="" id="imgview">
+                    <input type="file" name="image" class="form-control mb-1"  onchange="viewimage(event)"> 
+                    </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-success mt-4">submit</button>
+                    </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+
+    <script>
+    function viewimage(event) {
+       document.getElementById('imgview').src=URL.createObjectURL(event.target.files[0])
+    }
+</script>

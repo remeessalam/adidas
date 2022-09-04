@@ -1,0 +1,129 @@
+<!--================Login Box Area =================-->
+<section class="login_box_area section_gap p-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="login_box_img">
+                    <img class="img-fluid" style="max-height: 700px;"
+                        src="https://i.pinimg.com/originals/d5/7a/c1/d57ac178758f389174929866e7d2fb64.png" alt="">
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="login_form_inner p-2">
+                    <h3>Signup</h3>
+                    <h3>{{msg}}</h3>
+                    <form class="row login_form" action="/signup" method="post" id="userforms">
+                        <div class="col-md-12 form-group">
+                            <input type="text" class="form-control" id="fname" name="fname" placeholder="Firstname"
+                                onfocus="this.placeholder = ''" onblur="this.placeholder = 'Fast name'">
+                            <input type="text" class="form-control" id="lname" name="lname" placeholder="Lastname"
+                                onfocus="this.placeholder = ''" onblur="this.placeholder = 'Last name'">
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <input type="text" class="form-control" id="email" name="email" placeholder="Email"
+                                onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email'">
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <input type="password" class="form-control" id="password" name="password"
+                                placeholder="Password" onfocus="this.placeholder = ''"
+                                onblur="this.placeholder = 'Password'">
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <input type="password" class="form-control" id="conformpassword" name="confirmpassword"
+                                placeholder="Confirm Password" onfocus="this.placeholder = ''"
+                                onblur="this.placeholder = 'Confirm Password'">
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <input type="text" class="form-control" id="mobilenumber" name="mobilenumber"
+                                placeholder="Enter mobile number" onfocus="this.placeholder = ''"
+                                onblur="this.placeholder = 'Enter Number'">
+                        </div>
+                        {{!-- <div class="col-md-6 form-group">
+                            <a class="btn btn-outline-dark" href="/signupOtp">Get OTP</a>
+                        </div> --}}
+                        <div class="col-md-12 form-group">
+                            <button type="submit" value="submit" class="btn btn-outline-dark">Signup</button>
+                        </div>
+                         <div class="col-md-12 form-group">
+                            <a href="/login">already have account login</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--================End Login Box Area =================-->
+
+
+
+    <!-- below we are including the jQuery and jQuery plugin .js files -->
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+    <script>
+        $().ready(function () {
+ 
+            $("#userforms").validate({
+                // in 'rules' user have to specify all the constraints for respective fields
+                rules: {
+                    fname: {
+                        required:true
+                        },
+                    lname: {
+                        required:true
+                        },
+                    email: {
+                        required: true,
+                        email: true //for length of lastname
+                    },
+                    password: {
+                        required: true,
+                        minlength: 5
+                    },
+                    confirmpassword: {
+                        required: true,
+                        minlength: 5,
+                        equalTo: "#password" //for checking both passwords are same or not
+                    },
+                    mobilenumber: {
+                    required:true,
+                    minlength:10,
+                    maxlength:10,
+                    },
+                    agree: "required"
+                },
+                // in 'messages' user have to specify message as per rules
+                messages: {
+                    fname:{
+                        required: 'enter firstname'
+                    },
+                    lname: {
+                        required:"enter lastname"
+                        },
+                    email: {
+                        required: " Please enter a email",
+                        email: " Your username must  @ characters"
+                    },
+                    password: {
+                        required: " Please enter a password",
+                        minlength: " Your password must be consist of at least 5 characters"
+                    },
+                    confirmpassword: {
+                        required: " Please enter a password",
+                        minlength: " Your password must be consist of at least 5 characters",
+                        equalTo: " Please enter the same password as above"
+                    },
+                    mobilenumber:{
+                        requires:'enter your mobile number',
+                        minlength:'enter 10 digits',
+                        maxlength:'more than 10'
+                    },
+                    agree: "Please accept our policy"
+                }
+            });
+        });
+ 
+    </script>

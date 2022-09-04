@@ -1,0 +1,314 @@
+<script src="/js/vendor/jquery-2.2.4.min.js"></script>
+
+<section class="cart_area" style="margin-top: 10rem;">
+    <div class="container">
+        <div class="cart_inner">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Product</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{!-- {{json cartsitems}} --}}
+                        {{#each cartsitems.product}}
+                        <tr>
+                            <td>
+                                <div class="media">
+                                    <div class="d-flex">
+                                        <img style="width:10rem;height:10rem"
+                                            src="/productsimage/{{this.productid._id}}.jpg" alt="">
+                                    </div>
+                                    <div class="media-body">
+                                        <p>{{this.productid.productName}}</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <h5>${{this.productid.price}}.00</h5>
+                            </td>
+                            <td>
+                                <div class="product_count">
+                                    <input type="text"
+                                        onchange="deleteitem('{{this.quantity}}','{{this.productid._id}}')" name="qty"
+                                        id="{{this.productid._id}}" maxlength="12" value="{{this.quantity}}"
+                                        title="Quantity:" class="input-text qty">
+                                    <button
+                                        onclick="countinc('{{this.productid._id}}');var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
+                                        class="increase items-count" type="button"><i
+                                            class="lnr lnr-chevron-up"></i></button>
+                                    <button
+                                        onclick="countmin('{{this.productid._id}}','{{this.quantity}}');var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;"
+                                        class="reduced items-count" type="button"><i
+                                            class="lnr lnr-chevron-down"></i></button>
+                                </div>
+                            </td>
+                            <td>
+                                <h5>${{total this.quantity this.productid.price}}.00</h5>
+                            </td>
+                            <td>
+                                <a class="btn btn-dark" onclick="deletecartitem('{{this.productid._id}}')">x</a>
+                                {{!-- <h5>{{this._id}}</h5> --}}
+                            </td>
+                        </tr>
+                        {{/each}}
+
+                        <tr class="bottom_button">
+                            <td>
+                                <a class="gray_btn" href="/category">Update Cart</a>
+                            </td>
+                            {{!-- <td>
+                                <a href="" class="gray_btn" data-bs-toggle="modal" data-bs-target="#coupons">Coupon</a>
+                            </td> --}}
+                            <td>
+
+                            </td>
+                            <td>
+
+                            </td>
+                            <td>
+                                <div class="cupon_text d-flex align-items-center">
+                                    <input type="text" id="MyText" name="coupons" {{#each coupon}}
+                                        placeholder="{{this.couponCode}}" {{/each}}>
+                                    <button style="border:none" class="primary-btn"
+                                        onclick="checkCoupon()">Apply</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+
+                            </td>
+                            <td>
+
+                            </td>
+                            <td>
+                                <h5>Subtotal</h5>
+                            </td>
+                            <td>
+                                <h5>{{subTotal cartsitems.product}}</h5>
+                            </td>
+                        </tr>
+                        <tr class="shipping_area">
+                            <td>
+
+                            </td>
+                            <td>
+
+                            </td>
+                            <td>
+                                {{!-- <h5>coupon</h5> --}}
+                            </td>
+
+                            <td>
+                                {{!-- <div class="shipping_box">
+                                    <ul class="list">
+                                        <li><a href="#">Flat Rate: $5.00</a></li>
+                                        <li><a href="#">Free Shipping</a></li>
+                                        <li><a href="#">Flat Rate: $10.00</a></li>
+                                        <li class="active"><a href="#">Local Delivery: $2.00</a></li>
+                                        <li class="active"><a href="#">Local Delivery: $2.00</a></li>
+                                    </ul>
+                                    <h6>Calculate Shipping <i class="fa fa-caret-down" aria-hidden="true"></i></h6>
+                                    <select class="shipping_select">
+                                        <option value="1">Bangladesh</option>
+                                        <option value="2">India</option>
+                                        <option value="4">Pakistan</option>
+                                    </select>
+                                    <select class="shipping_select">
+                                        <option value="1">Select a State</option>
+                                        <option value="2">Select a State</option>
+                                        <option value="4">Select a State</option>
+                                    </select>
+                                    <input type="text" placeholder="Postcode/Zipcode">
+                                    <a class="gray_btn" href="#">Update Details</a>
+                                </div> --}}
+                                <div>
+
+                                    <table style="border:">
+                                        <tr>
+
+                                            <td>Discount</td>
+                                            <td><input id="discountadd" name="discount" style="border: none" type="text"
+                                                    value="0 "></td>
+                                        </tr>
+                                        <tr>
+
+                                            <td>total</td>
+                                            <td><input type="text" id="totalAmt" name="totalamount" style="border: none"
+                                                    value="{{subTotal cartsitems.product}}">
+                                                <input type="text" id="couponid" name="id"
+                                                    style="border: none ;display :none" value="">
+                                            </td>
+                                        </tr>
+                                    </table>
+
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="out_button_area">
+                            <td>
+
+                            </td>
+                            <td>
+
+                            </td>
+                            <td>
+
+                            </td>
+                            <td>
+                                <div class="checkout_btn_inner d-flex align-items-center">
+                                    {{!-- <a class="gray_btn" href="/category">update cart</a> --}}
+                                    <button style="border: none"  type="submit"
+                                        class="primary-btn"><a href="/checkout"> Proceed to checkout</a></button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+<!--================End Cart Area =================-->
+{{!-- coupon cart start --}}
+{{!-- <div class="modal fade" id="coupons" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">add coupon</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form class="p-1" action="/admin/addcoupon" method="post">
+
+                    <div class="row">
+
+
+                        <div class="col md-6">
+                            <label for="text">coupon code</label>
+                            {{#each coupon}}
+                            <p>
+                                coupon code : {{this.couponCode}}<br>
+                                for : {{this.discription}}<br>
+                                disocunt : {{this.discount}}% <br </p>
+                                {{/each}}
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div> --}}
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<!-- start footer Area -->
+<script>
+    const countinc = async (id) => {
+        const res = await axios.get(`/inccartproduct/${id}`).then((data) => {
+            console.log(data)
+            window.location.reload()
+        })
+    }
+    const countmin = async (id, quantity) => {
+        if (quantity > 1) {
+            axios.get(`/mincartproduct/${id}`).then()
+            window.location.reload()
+        }
+
+
+
+    }
+    const deletecartitem = (prodid) => {
+        swal({
+            title: "Are you sure?",
+            text: "Remove this product from your cart!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    axios.get(`/deletecartproduct/${prodid}`).then()
+                    window.location.reload()
+                } else {
+                    swal("Item not removed from cart keep shoping");
+                }
+
+            })
+
+
+    }
+    const checkCoupon = () => {
+        let coupon = document.getElementById("MyText").value
+        console.log(coupon)
+        if (coupon) {
+            axios.post('/checkCoupon', { coupon }).then((e) => {
+                console.log(e)
+                if (e.data.response.status) {
+                    let discount = e.data.response.data.discount
+                    document.getElementById('discountadd').value = discount
+                    console.log(e.data.response.totalamount)
+
+                    console.log(e.data.response.totalamount)
+                    document.getElementById("totalAmt").value = e.data.totalamount
+                    document.getElementById("couponid").value = e.data.response.data._id
+                    swal({
+                        title: "coupon added!",
+                        text: "you get discount !",
+                        icon: "success",
+                    });
+                }
+
+                else {
+                    swal("sorry!", "coupon is invalid or this coupon is used!", "warning");
+                }
+            })
+        }
+        else {
+            swal("sorry!", "enter coupon code!", "warning");
+        }
+
+    }
+    
+
+</script>
+
+
+<!-- JavaScript Bundle with Popper -->
+{{!--
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+    crossorigin="anonymous"></script> --}}
+
+
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+
+
+
+
+
+swal({
+title: "Are you sure?",
+text: "Once deleted, you will not be able to recover this imaginary file!",
+icon: "warning",
+buttons: true,
+dangerMode: true,
+})
+.then((willDelete) => {
+if (willDelete) {
+swal("Poof! Your imaginary file has been deleted!", {
+icon: "success",
+});
+} else {
+swal("Your imaginary file is safe!");
+}
+});

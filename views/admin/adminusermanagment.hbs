@@ -1,0 +1,98 @@
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+    crossorigin="anonymous"></script>
+
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+<section>
+    <div class="container " style="margin-top:10rem ;">
+        <div class="row">
+            <p>user details</p>
+        </div>
+        <div class="col-md-12">
+            <table class="table mt-5" id="adminProductTable">
+                <thead>
+                    <tr>
+                        <th scope="col">No</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Mobile number</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">view/block</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each allusers}}
+                    <tr>
+                        <td>{{@index}}</td>
+                        <td>{{this.fname}} {{this.lname}}</td>
+                        <td>{{this.email}}</td>
+                        <td>{{this.mobilenumber}}</td>
+                        <td><a id="status">{{this.status}}</a></td>
+                        <td><a href="/admin/viewuser/{{this._id}}" class="btn btn-success">view</a>
+                            <a class="btn btn-dark" style="color: white;" id="blockbutton"
+                                onclick="changeStatus('{{this.status}}','{{this._id}}')">{{check this.status}}
+                                </a>
+                        </td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+
+<script>
+    $(document).ready(function () {
+        $('#adminProductTable').DataTable();
+    });
+
+    const changeStatus = (status, id) => {
+        if (status === "active") {
+            swal({
+                title: "Are you sure?",
+                text: "To Block This User!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        axios.get(`/admin/blockuser/${id}`).then((e) => {
+                            console.log(e.data)
+                            
+                            
+                            window.location.reload()
+                        })
+                    } else {
+                        swal({ icon: "success" });
+                    }
+
+                })
+
+        } else {
+            swal({
+                title: "Are you sure?",
+                text: "To Unblock This User!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        axios.get(`/admin/unblockuser/${id}`).then((e) => {
+                            console.log(e)
+                             
+                            window.location.reload()
+                        })
+                    } else {
+                        swal({ icon: "success" });
+                    }
+
+                })
+
+        }
+    }
+</script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>

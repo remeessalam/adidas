@@ -1,0 +1,147 @@
+<section class="order_details section_gap">
+    <div class="container">
+        <h3 class="title_confirmation"></h3>
+        <div class="row order_d_inner">
+            <div class="col-lg-4">
+                <div class="details_item">
+                    <h4>Order Info</h4>
+                    <ul class="list">
+                        {{!-- <li><a href="#"><span>Order number</span> : 60235</a></li> --}}
+                        <li><a href="#"><span>Date</span> : {{date order.createdAt}}</a></li>
+                        <li><a href="#"><span>Total</span> : {{order.totalamount}}</a></li>
+                        <li><a href="#"><span>Payment method</span> : {{order.payment}}</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="details_item">
+                    <h4>Shipping Address</h4>
+                    <ul class="list">
+                        <li><a href="#"><span>House</span> : {{order.address.house}}</a></li>
+                        <li><a href="#"><span>Street</span> : {{order.address.street}}</a></li>
+                        <li><a href="#"><span>District</span> : {{order.address.city}}</a></li>
+                        <li><a href="#"><span>state </span> : {{order.address.district}}</a></li>
+                        <li><a href="#"><span>Pincode</span> : {{order.address.pincode}}</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="details_item">
+                    <h4>Order status</h4>
+                    <ul class="list">
+                        <li><h4>Status : <span style="color: green;" id="statusvalue">{{order.status}}</span></h4></li>
+                        <li><input type="radio" name="status" value="pending">pending</li>
+                        <li><input type="radio" name="status" value="placed">placed</li>
+                        <li><input type="radio" name="status" value="shipped">shipped</li>
+                        <li><input type="radio" name="status" value="delivered">delivered</li>
+                        <li><button class="btn btn-dark" onclick="changeStatus('{{order._id}}')">Change Status</button></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="order_details_table">
+            <h2>Order Details</h2>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Product</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each order.products}}
+                        <tr>
+                            <td>
+                                <p>{{ this.productid.productName}}</p>
+                            </td>
+                            <td>
+                                <h5>x {{this.quantity}}</h5>
+                            </td>
+                            <td>
+                                <p>${{total this.productid.price this.quantity}}.00</p>
+                            </td>
+                        </tr>
+                        {{/each}}
+                        {{!-- <tr>
+                            <td>
+                                <p>Pixelstore fresh Blackberry</p>
+                            </td>
+                            <td>
+                                <h5>x 02</h5>
+                            </td>
+                            <td>
+                                <p>$720.00</p>
+                            </td>
+                        </tr> --}}
+                        {{!-- <tr>
+                            <td>
+                                <p>Pixelstore fresh Blackberry</p>
+                            </td>
+                            <td>
+                                <h5>x 02</h5>
+                            </td>
+                            <td>
+                                <p>$720.00</p>
+                            </td>
+                        </tr> --}}
+                        <tr>
+                            <td>
+                                <h4>Subtotal</h4>
+                            </td>
+                            <td>
+                                <h5></h5>
+                            </td>
+                            <td>
+                                <p>${{subTotal order.products}}.00</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h4>discount</h4>
+                            </td>
+                            <td>
+                                <h5></h5>
+                            </td>
+                            <td>
+                                <p>{{order.discount}} %</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h4>Total</h4>
+                            </td>
+                            <td>
+                                <h5></h5>
+                            </td>
+                            <td>
+                                <p>${{order.totalamount}}.00</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<script>
+    const changeStatus = (orderid)=>{
+       let status = $("input[type = 'radio'][name = 'status']:checked").val()
+       console.log(status,orderid)
+       axios.post('/admin/changestatus',{
+        id : orderid,
+        status :  status
+       }).then((e)=>{
+        console.log(e)
+        if(e.data.status){
+            document.getElementById('statusvalue').innerHTML = status
+        }
+        else{
+            alert('status not changed')
+        }
+       })
+    }
+</script>

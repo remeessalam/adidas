@@ -1,0 +1,71 @@
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+
+
+
+<script src="/js/vendor/jquery-2.2.4.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+  crossorigin="anonymous"></script>
+
+<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
+  integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+<section>
+
+  <div class="container " style="margin-top:10rem ;">
+    <div class="row">
+      <p>hi {{users.fname}} ! your orders</p>
+
+      <div class="col-md-12">
+        {{!-- <a href="" class="btn btn-warning" style="margin:1rem ;" data-bs-toggle="modal"
+          data-bs-target="#staticBackdrop">Add Banner</a></td> --}}
+        <table class="table mt-5" id="adminProductTable">
+          <thead>
+            <tr>
+              <th scope="col">No</th>
+              <th scope="col">payment</th>
+              <th scope="col">purchase date</th>
+              <th scope="col">status</th>
+              <th scope="col">productName</th>
+              <th scope="col">address</th>
+             <th scope="col">Amount</th>
+              <th scope="col">cancel order</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each order}}
+            <tr>
+              <td>{{@index}}</td>
+              <td>{{this.payment}}</td>
+              <td>{{date this.createdAt}}</td>
+              <td>{{this.status}}</td>
+              
+              <td >
+                {{#each products}}
+                <p><a style="text-decoration:none ;color:orange" href="/viewproduct/{{this.productid._id}}">{{this.productid.productName}}</a></p>
+                {{/each}}
+                </td>
+              <td><p>{{this.address.house}}<br>{{this.address.street}}<br>{{this.address.city}}<br>{{this.address.state}}<br>{{this.address.pincode}}</p></td>
+              <td>{{this.totalamount}}</td>
+              <td>
+                <a href="/viewOrderDetails/{{this._id}}" class="btn btn-dark"
+                  >view</a>
+                <a href="/admin/deletebanner/{{this._id}}" class="btn btn-danger"
+                  onclick="return confirm('are you sure to delete this banner ?')">cancel</a>
+              </td>
+            </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+{{!-- <link rel="stylesheet" href="/stylesheets/orderdetails.css"> --}}
+  

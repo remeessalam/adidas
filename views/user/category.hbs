@@ -1,0 +1,118 @@
+<div class="container" style="margin-top: 10rem;">
+	<div class="row">
+		<div class="col-xl-3 col-lg-4 col-md-5">
+			<div class="sidebar-categories">
+				<div class="head" style="text-align: center;background:rgb(235, 174, 5)">Categories</div>
+				{{#each category}}
+				<ul>
+					<li><button onclick="search('{{this.categoryname}}')" class="p-3"
+							style="border:none;background:white">{{uppercase this.categoryname}}</button></li>
+				</ul>
+				{{/each}}
+			</div>
+		</div>
+		
+			<div class="col-xl-9 col-lg-8 col-md-7">
+				<ul id="myUL">
+				<section class="lattest-product-area pb-40 category-list">
+					<div class="row">
+						{{#each data}}
+						<div class="col-lg-4 col-md-4 f">
+							<div class="single-product">
+								<img class="img-fluid" src="/productsimage/{{this._id}}.jpg" alt="">
+								<div class="product-details">
+									<h6>{{this.productName}}</h6>
+									<div class="price">
+										<h6>{{this.price}}.00 $</h6>
+										{{!-- <h6 class="l-through">$210.00</h6> --}}
+										<li><a href="">{{this.category.categoryname}}</a></li>
+									</div>
+									<div class="prd-bottom">
+										<a href="javascript:;" onclick="myEvent('{{this._id}}')" class="social-info">
+											<span class="ti-bag"></span>
+											<p class="hover-text">cart</p>
+										</a>
+										<a href="javascript:;" onclick="addwishList('{{this._id}}')" class="social-info">
+											<span class="lnr lnr-heart"></span>
+											<p class="hover-text">Wishlist</p>
+										</a>
+										<a href="/viewproduct/{{this._id}}" class="social-info">
+											<span class="lnr lnr-move"></span>
+											<p class="hover-text">product</p>
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						{{/each}}
+					</div>
+				</section>
+				</ul>
+			</div>
+		
+	</div>
+</div>
+
+<script>
+	const myEvent = async (id) => {
+		console.log('hai')
+		const res = await axios.get(`/addcart/${id}`).then((e) => {
+			console.log(e)
+			if (e.data.status) {
+				swal({
+					title: "Add To Cart!",
+					icon: "success",
+				});
+			}
+			else {
+				swal({
+					title: "product in cart!",
+					icon: "info",
+				})
+			}
+		})
+	}
+	const addwishList = (id)=>{
+			console.log('hai')
+			console.log(id)
+			axios.get(`/addwishlist/${id}`).then((e) => {
+				console.log(e)
+
+				if (e.data.status) {
+					swal({
+						title: "Add To Favorite!",
+						icon: "success",
+					});
+				}
+				else {
+					swal({
+						title: "Product Already In Favorite!",
+						icon: "info",
+					})
+				}
+			})
+	}
+	function search(input) {
+		var  filter, ul, li, a, i, txtValue, f;
+		filter = input.toUpperCase();
+		ul = document.getElementById("myUL");
+		f = ul.getElementsByClassName('f')
+		li = ul.getElementsByTagName("li");
+		console.log(li[0].getElementsByTagName("a"))
+		for (i = 0; i < li.length; i++) {
+			a = li[i].getElementsByTagName("a")[0];
+			txtValue = a.textContent || a.innerText;
+			if (txtValue.toUpperCase().indexOf(filter) > -1) {
+				f[i].style.display = "";
+			} else {
+				f[i].style.display = "none";
+			}
+		}
+	}
+
+</script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+<script src="js/vendor/jquery-2.2.4.min.js"></script>
