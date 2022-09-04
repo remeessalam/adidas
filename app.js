@@ -11,7 +11,8 @@ var hbs = require('express-handlebars')
 var app = express();
 const fileupload = require('express-fileupload');
 const { ifError } = require('assert');
-mongoose.connect('mongodb://localhost:27017/adidas').then((res)=>{
+const env = require('dotenv').config()
+mongoose.connect(process.env.mongo_url).then((res)=>{
   console.log('db connect')
 })
 // view engine setup
