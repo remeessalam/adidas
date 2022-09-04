@@ -1,5 +1,5 @@
 const products = require('../schemaModel/products')
-const Category = require('../schemaModel/Category');
+const Category = require('../schemaModel/category');
 const { json } = require('express');
 const coupon = require('../schemaModel/coupon')
 
