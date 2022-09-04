@@ -13,7 +13,7 @@ const fileupload = require('express-fileupload');
 const { ifError } = require('assert');
 const env = require('dotenv').config()
 mongoose.connect(process.env.mongo_url).then((res)=>{
-  console.log('db connect')
+  console.log('db connect') 
 })
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

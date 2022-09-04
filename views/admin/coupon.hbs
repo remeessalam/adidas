@@ -63,7 +63,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form class="p-1" action="/admin/addcoupon" method="post">
+                <form class="p-1" action="/admin/addcoupon" id="addcoupondetails" method="post">
 
                     <div class="row">
 
@@ -99,6 +99,45 @@
     });
 </script>
 
+<script>
+    $().ready(function () {
 
+        $("#addcoupondetails").validate({
+            // in 'rules' user have to specify all the constraints for respective fields
+            rules: {
+                couponCode: {
+                    required: true
+                },
+                discription: {
+                    required: true
+                },
+                discount: {
+                    required: true,
+                },
+                agree: "required"
+            },
+            // in 'messages' user have to specify message as per rules
+            messages: {
+                couponCode: {
+                    required: 'this feild is requires'
+                },
+                discription: {
+                    required: "this feild is requires"
+                },
+                discount: {
+                    required: 'this feild is requires',
+                },
+                agree: "Please accept our policy"
+            }
+        });
+    });
+
+
+
+
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
 
 {{!-- https://stackoverflow.com/questions/22103989/adding-offset-to-index-when-looping-through-items-in-handlebars --}}

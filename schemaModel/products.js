@@ -6,7 +6,7 @@ const { stringify } = require('querystring');
 const productSchema = new mongoose.Schema({
     productName:{
         type : String,
-    },
+    }, 
     price:{
         type : String
     },

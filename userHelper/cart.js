@@ -11,7 +11,7 @@ const { resolve } = require('path')
 const { ifError } = require('assert')
 const wishlist = require('../schemaModel/wishlist')
 const env = require('dotenv').config()
-var instance = new Razorpay({
+var instance = new Razorpay({ 
     key_id: process.env.key_id,
     key_secret : process.env.key_secret
 });

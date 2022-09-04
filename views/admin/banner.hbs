@@ -117,7 +117,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form class="p-1" action="/admin/addbanner" method="post" enctype="multipart/form-data">
+        <form class="p-1" action="/admin/addbanner" id="addbannerdetails" method="post" enctype="multipart/form-data">
 
           <div class="row">
 
@@ -146,11 +146,11 @@
                 <div class="col md-2">
                   <p>product image</p>
                   <img style="width:13rem;height:10rem" alt="" id="productimg">
-                  <input type="file" name="productimage" class="form-control mb-1">
+                  {{!-- <input type="file" name="productimage" class="form-control mb-1"> --}}
                 </div>
                 <div class="col md-2">
                   <p>banner image</p>
-                  <img style="width:13rem;height:10rem" alt="" id="bannerimg">
+                  <img style="width:13rem;height:10rem" src="" alt="" id="bannerimg">
                   <input type="file" name="image" class="form-control mb-1" onchange="viewimage(event)">
                 </div>
               </div>
@@ -186,7 +186,51 @@
     document.getElementById('bannerimg').src = URL.createObjectURL(event.target.files[0])
   }
 </script>
+<script>
+    $().ready(function () {
+
+        $("#addbannerdetails").validate({
+            // in 'rules' user have to specify all the constraints for respective fields
+            rules: {
+                heading: {
+                    required: true
+                },
+                about: {
+                    required: true
+                },
+                product: {
+                    required: true,
+                },
+                image: {
+                    required: true,
+                },
+                agree: "required"
+            },
+            // in 'messages' user have to specify message as per rules
+            messages: {
+                heading: {
+                    required: 'this feild is requires'
+                },
+                about: {
+                    required: "this feild is requires"
+                },
+                product: {
+                    required: 'this feild is requires',
+                },
+                image: {
+                    required: "require image",
+                },
+                agree: "Please accept our policy"
+            }
+        });
+    });
 
 
 
-{{!-- https://stackoverflow.com/questions/22103989/adding-offset-to-index-when-looping-through-items-in-handlebars --}}
+
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+
+

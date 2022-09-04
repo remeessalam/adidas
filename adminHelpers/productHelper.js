@@ -12,7 +12,7 @@ module.exports = {
                 product = new products({
                     productName,
                     price,
-                    color,
+                    color, 
                     quantity,
                     about,
                     category

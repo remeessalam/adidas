@@ -1,81 +1,144 @@
 <div class='container-fluid' style="margin-top:10rem ;">
-        {{!-- <div class="card mx-auto col-md-6 col-10 mt-5"> --}}
-            <h3 class=" m-5">Add product</h3>
-            {{!-- <img class='mx-auto img-thumbnail'
-                src="https://i.imgur.com/pjITBzX.jpg"
-                width="auto" height="auto"/> --}}
-            <div class="card-body text-center mx-auto">
-                 <form class="p-1" action="/admin/addproducts" method="post"  enctype="multipart/form-data">
-                 
-                 <div class="row">
-                    
-                    
-                    <div class="col md-6">
-                       
-                    <label for="text">Product Name</label>
-                    <input type="text" name="productName" class="form-control mb-1" placeholder="product name">
-                    <label for="text">Price</label>
-                    <input type="text" name="price" class="form-control mb-1" placeholder="price">
-                    <label for="text">Color </label>
-                    <input type="text" name="color" class="form-control mb-1" placeholder="color"> 
-                    <select name="category" class="form-control" placeholder="category">
-                    {{!-- <option name="category" value="category">category</option> --}}
-                    {{#each category}}
-                    <option value="{{this._id}}">{{this.categoryname}}</option>
-                    {{/each}}
-                    </select>              
-                    </div>
-                    <div class="col md-6">
-                      
-                    <label for="text">Quantity</label>                 
-                    <input type="text" name="quantity" class="form-control mb-1" placeholder="quantity"> 
-                    <label for="text">About</label>
-                    <input type="text" name="about" class="form-control mb-1" placeholder="about">    
-                    <div class="row">
-                    <div class="col md-2"> 
-                    <img style="width:10rem;height:10rem" alt="" id="imgview1">
-                    <input type="file" name="image" class="form-control mb-1" onchange="viewimage(event)"> 
-                    </div>
-                    {{!-- <div class="col md-2"> 
-                    <img style="width:10rem;height:10rem" src="/productsimage/{{data._id}}.jpg" alt="" id="imgview2">
-                    <input type="file" name="image2" class="form-control mb-1" onchange="viewimage2(event)"> 
-                    </div>  --}}
-                    {{!-- <div class="col md-2"> 
-                    <img style="width:10rem;height:10rem"src="/productsimage/{{data._id}}.jpg" alt="" id="imgview3">
-                    <input type="file" name="image3" class="form-control mb-1" onchange="viewimage3(event)">
-                    </div>  --}}
-                    </div>
-                    
-                    <button type="submit" class="btn btn-success mt-4">submit</button>
-                    </div>
-                    </div>
-                </form>
-            </div>
-        </div>
+    {{!-- <div class="card mx-auto col-md-6 col-10 mt-5"> --}}
+        <h3 class=" m-5">Add product</h3>
+        {{!-- <img class='mx-auto img-thumbnail' src="https://i.imgur.com/pjITBzX.jpg" width="auto" height="auto" />
+        --}}
+        <div class="card-body text-center mx-auto">
+            <form class="p-1" action="/admin/addproducts" method="post" id="addproductdetails"
+                enctype="multipart/form-data">
 
+                <div class="row">
+
+
+                    <div class="col md-6">
+
+                        <label for="text">Product Name</label>
+                        <input type="text" name="productName" class="form-control mb-1" placeholder="product name">
+                        <label for="text">Price</label>
+                        <input type="number" name="price" class="form-control mb-1" placeholder="price">
+                        <label for="text">Color </label>
+                        <input type="text" name="color" class="form-control mb-1" placeholder="color">
+                        <select name="category" class="form-control" placeholder="category">
+                            {{!-- <option name="category" value="category">category</option> --}}
+                            
+                            {{#each category}}
+                            <option value="{{this._id}}">{{this.categoryname}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    <div class="col md-6">
+
+                        <label for="text">Quantity</label>
+                        <input type="number" name="quantity" class="form-control mb-1" placeholder="quantity">
+                        <label for="text">About</label>
+                        <input type="text" name="about" class="form-control mb-1" placeholder="about">
+                        <div class="row">
+                            <div class="col md-2">
+                                <img style="width:10rem;height:10rem" alt="" id="imgview1">
+                                <input type="file" name="image" class="form-control mb-1" onchange="viewimage(event)">
+                            </div>
+                            {{!-- <div class="col md-2">
+                                <img style="width:10rem;height:10rem" src="/productsimage/{{data._id}}.jpg" alt=""
+                                    id="imgview2">
+                                <input type="file" name="image2" class="form-control mb-1" onchange="viewimage2(event)">
+                            </div> --}}
+                            {{!-- <div class="col md-2">
+                                <img style="width:10rem;height:10rem" src="/productsimage/{{data._id}}.jpg" alt=""
+                                    id="imgview3">
+                                <input type="file" name="image3" class="form-control mb-1" onchange="viewimage3(event)">
+                            </div> --}}
+                        </div>
+
+                        <button type="submit" class="btn btn-success mt-4">submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
 
+</div>
 
 
 
-   
 
 
 
 
-   <link rel="stylesheet" href="/stylesheet/style.css">
+
+
+<link rel="stylesheet" href="/stylesheet/style.css">
 
 
 
-   <script>
+<script>
     function viewimage(event) {
-       document.getElementById('imgview1').src=URL.createObjectURL(event.target.files[0])
+        document.getElementById('imgview1').src = URL.createObjectURL(event.target.files[0])
     }
-  
+
 </script>
-  {{!-- function viewimage2(event) {
-       document.getElementById('imgview2').src=URL.createObjectURL(event.target.files[0])
-    } 
-    function viewimage3(event) {
-       document.getElementById('imgview3').src=URL.createObjectURL(event.target.files[0])
-    } --}}
+
+
+<script>
+    $().ready(function () {
+
+        $("#addproductdetails").validate({
+            // in 'rules' user have to specify all the constraints for respective fields
+            rules: {
+                productName: {
+                    required: true
+                },
+                price: {
+                    required: true
+                },
+                color: {
+                    required: true,
+                },
+                category: {
+                    required: true,
+                },
+                quantity: {
+                    required: true,
+                },
+                about: {
+                    required: true,
+                },
+                image: {
+                    required: true,
+                },
+                agree: "required"
+            },
+            // in 'messages' user have to specify message as per rules
+            messages: {
+                productName: {
+                    required: 'this feild is requires'
+                },
+                price: {
+                    required: "this feild is requires"
+                },
+                color: {
+                    required: 'this feild is requires',
+                },
+                category: {
+                    required: " this feild is requires",
+                },
+                quantity: {
+                    required: " please fill up this feild",
+                },
+                about: {
+                    required: " please fill up this feild",
+                },
+                image: {
+                    required: " please fill up this feild",
+                },
+                agree: "Please accept our policy"
+            }
+        });
+    });
+
+
+
+
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
