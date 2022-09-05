@@ -61,7 +61,7 @@ const obj = {
     },
     getcart: (userId) => {
         return new Promise(async (resolve, reject) => {
-            console.log(userId)
+            console.log(userId+"---hsklfhaskjfsahjasdjkfaaskf")
             let carts = await cart.findOne({ user: userId }).populate('product.productid').lean()
             if (carts) {
 

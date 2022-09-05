@@ -10,6 +10,7 @@ const { response } = require('../app');
 const { stringify } = require('querystring');
 const { ifError } = require('assert');
 const coupon = require('../schemaModel/coupon');
+const { nextTick } = require('process');
 /* HOME PAGE RENDERING */
 const verifylogin = async(req, res, next) => {
   if (req.session.login) {
@@ -29,6 +30,8 @@ const verifylogin = async(req, res, next) => {
   }
 }
 router.get('/', function (req, res, next) {
+  try{
+  
   let users = req.session.users
   console.log(users)
   productdetails.getAllProducts().then(async (data) => {
@@ -39,9 +42,13 @@ router.get('/', function (req, res, next) {
     console.log(banners)
  
   })
+}catch(err){
+  next(err)
+}
 });
 /* GET SIGNUP PAGE*/
-router.get('/userSignup', (req, res) => {
+router.get('/userSignup', (req, res,next) => {
+  try{
   if (req.session.founded) {
     
     let msg = "THIS EMAIL IS ALREADY REGISTERED"
@@ -49,9 +56,13 @@ router.get('/userSignup', (req, res) => {
   }
  
   res.render('user/userSignup')
+}catch(err){
+  next(err)
+}
 })
 /* POST SIGNUP PAGE */
-router.post('/signup', (req, res) => {
+router.post('/signup', (req, res,next) => {
+  try{
   req.session.users = req.body
   let user = req.body
   credentialCheck.dosignUp(user).then((data) => {
@@ -66,9 +77,13 @@ router.post('/signup', (req, res) => {
     }
 
   })
+}catch (err) {
+  next(err)
+}
 })
 /* GET LOGIN PAGE */
-router.get('/login', async(req, res) => {
+router.get('/login', async(req, res,next) => {
+  try{
   if (req.session.signup) {
     res.redirect('/')
   } else if (req.session.login) {
@@ -85,9 +100,13 @@ router.get('/login', async(req, res) => {
     let msg ='USER NOT FOUND...!'
     res.render('user/login')
   }
+}catch(err){
+  next(err)
+}
 })
 // post login request
-router.post('/login', (req, res) => {
+router.post('/login', (req, res,next) => {
+  try{
   let user = req.body
   if (user) {
     credentialCheck.dologin(user).then((response) => {
@@ -112,6 +131,9 @@ router.post('/login', (req, res) => {
     
     res.redirect('/login')
   }
+}catch(err){
+  next(err)
+}
 })
 
 
@@ -121,7 +143,8 @@ router.get('/logout', (req, res) => {
   res.redirect('/')
 })
 // product view 
-router.get('/viewproduct/:id', (req, res) => {
+router.get('/viewproduct/:id', (req, res,next) => {
+  try{
   let proId = req.params.id
   console.log(proId)
   productdetails.viewproduct(proId).then((data) => {
@@ -134,8 +157,12 @@ router.get('/viewproduct/:id', (req, res) => {
       res.redirect('/', { user: true })
     }
   })
+}catch(err){
+  next(err)
+}
 })
-router.get('/category',(req, res) => {
+router.get('/category',(req, res,next) => {
+  try{
   let users = req.session.users
   productdetails.getAllProducts().then((data) => {
     console.log(data)
@@ -143,8 +170,12 @@ router.get('/category',(req, res) => {
       res.render('user/category', { category, data, users, user: true })
     })
   })
+}catch(err){
+  next(err)
+}
 })
-router.get('/categoryprods/:id', (req, res) => {
+router.get('/categoryprods/:id', (req, res,next) => {
+  try{
   let users = req.session.users
   console.log(req.params.id)
   productdetails.getCategoryProds(req.params.id).then((data) => {
@@ -153,8 +184,12 @@ router.get('/categoryprods/:id', (req, res) => {
     })
 
   })
+}catch (err) {
+  next(err)
+}
 })
-router.get('/cart',verifylogin, (req, res) => {
+router.get('/cart',verifylogin, (req, res,next) => {
+  try{
   let users = req.session.users
   if (users) {
     console.log(users._id)
@@ -178,9 +213,13 @@ router.get('/cart',verifylogin, (req, res) => {
   } else {
     res.redirect('/login')
   }
+}catch(err){
+  next(err)
+}
 })
 
-router.get('/addcart/:id', verifylogin,(req, res) => {
+router.get('/addcart/:id', verifylogin,(req, res,next) => {
+  try{
   console.log('in add cart')
   let userId = req.session.users._id
   let proId = req.params.id
@@ -194,28 +233,44 @@ router.get('/addcart/:id', verifylogin,(req, res) => {
       res.json({ status: false })
     }
   })
+}catch(err){
+  next(err)
+}
 })
-router.get('/inccartproduct/:id',verifylogin, (req, res) => {
+router.get('/inccartproduct/:id',verifylogin, (req, res,next) => {
+  try{
   cart.inccart(req.params.id, req.session.users._id).then((data) => {
     if (data) {
       res.json({ data })
     }
   })
+}catch(err){
+  next(err)
+}
 })
-router.get('/mincartproduct/:id', verifylogin,(req, res) => {
+router.get('/mincartproduct/:id', verifylogin,(req, res,next) => {
+  try{
   cart.mincart(req.params.id, req.session.users._id).then((data) => {
     if (data) {
       res.json({ data })
     }
   })
+}catch(err){
+  next(err)
+}
 })
-router.get('/deletecartproduct/:id',verifylogin, (req, res) => {
+router.get('/deletecartproduct/:id',verifylogin, (req, res,next) => {
+  try{
   cart.deletecartproduct(req.params.id, req.session.users._id).then((data) => {
     console.log('data returned')
     res.redirect('/cart')
   })
+}catch(err){
+  next(err)
+}
 })
-router.get('/addwishlist/:id',verifylogin, (req, res) => {
+router.get('/addwishlist/:id',verifylogin, (req, res,next) => {
+  try{
   let users = req.session.users
   console.log(req.params.id)
   cart.addWishList(req.params.id, users._id).then((response) => {
@@ -225,40 +280,60 @@ router.get('/addwishlist/:id',verifylogin, (req, res) => {
       res.json({ status: false })
     }
   })
+}catch(err){
+  next(err)
+}
 })
-router.get('/wishlist', verifylogin,(req, res) => {
+router.get('/wishlist', verifylogin,(req, res,next) => {
+  try{
   let users = req.session.users
   console.log('in wishlist -----------------------')
   cart.getwishlist(users._id).then((wishlist) => {
     console.log(JSON.stringify(wishlist))
     res.render('user/wishlist', { wishlist, users, user: true })
   })
+}catch(err){
+  next(err)
+}
 })
-router.get('/unfavorite/:id',verifylogin, (req, res) => {
+router.get('/unfavorite/:id',verifylogin, (req, res,next) => {
+  try{
   let users = req.session.users
   cart.deletefavorite(req.params.id, users._id).then((response) => {
     console.log(response)
     res.redirect('/wishlist')
   })
+}catch(err){
+  next(err)
+}
 })
-router.post('/addAddress',verifylogin, (req, res) => {
+router.post('/addAddress',verifylogin, (req, res,next) => {
+  try{
   console.log(req.body)
   let user = req.session.users
   cart.addAddress(req.body, user._id).then((data) => {
     console.log(data)
     res.redirect('/checkout')
   })
+}catch(err){
+  next(err)
+}
 })
-router.get('/deleteAddress/:id',verifylogin, (req, res) => {
+router.get('/deleteAddress/:id',verifylogin, (req, res,next) => {
+  try{
   let addressid = req.params.id
   console.log(addressid)
   cart.deleteAddress(addressid).then((data) => {
     console.log('address deleted')
     res.redirect('/checkout')
   })
+}catch(err){
+  next(err)
+}
 })
 
-router.get('/checkout',verifylogin, async (req, res) => {
+router.get('/checkout',verifylogin, async (req, res,next) => {
+  try{
   console.log('-----------------------')
   let discount = req.session.discount
   console.log(coupon) + "-------sjfhasjfajsnfajd"
@@ -277,10 +352,14 @@ router.get('/checkout',verifylogin, async (req, res) => {
   } else {
     res.redirect('/login')
   }
+}catch(err){
+  next(err)
+}
 
 })
-router.post('/checkCoupon',verifylogin, (req, res) => {
+router.post('/checkCoupon',verifylogin, (req, res,next) => {
   let users = req.session.users
+  try{
   console.log(req.body)
   cart.checkcoupon(req.body, users._id).then(async (response) => {
     console.log('coupon founded')
@@ -302,11 +381,13 @@ router.post('/checkCoupon',verifylogin, (req, res) => {
       console.log(response)
       res.json({ response })
     }
-
-
   })
+}catch(err){
+  next(err)
+}
 })
-router.post('/checkoutorder',verifylogin, (req, res) => {
+router.post('/checkoutorder',verifylogin, (req, res,next) => {
+  try{
   let users = req.session.users
   console.log(req.body)
   cart.addorder(req.body, users._id).then(async (order) => {
@@ -324,8 +405,12 @@ router.post('/checkoutorder',verifylogin, (req, res) => {
       })
     }
   })
+}catch{
+  next(err)
+}
 })
-router.post('/verifypayment',verifylogin, (req, res) => {
+router.post('/verifypayment',verifylogin, (req, res,next) => {
+  try{
   console.log(req.body)
   cart.verifypayment(req.body).then(() => {
     cart.changepaymentstatus(req.body.order.receipt).then((data) => {
@@ -336,16 +421,23 @@ router.post('/verifypayment',verifylogin, (req, res) => {
     console.log(err)
     res.json({ status: false })
   })
+}catch(err){
+  next(err)
+}
 })
 
 
-router.get('/order/:id',verifylogin, (req, res) => {
+router.get('/order/:id',verifylogin, (req, res, next) => {
+  try{
   let users = req.session.users
   cart.getorders(req.params.id).then((order) => {
     console.log(order + 'data received in order')
     req.session.discount = 0
     res.render('user/order', { order, users, user: true })
   })
+}catch(err){
+  next(err)
+}
 })
 
 //   console.log(JSON.stringify(order)+"json order")
@@ -365,7 +457,8 @@ router.get('/order/:id',verifylogin, (req, res) => {
 // res.redirect('/checkout')
 // }
 
-router.get('/onlinepayment',verifylogin, (req, res) => {
+router.get('/onlinepayment',verifylogin, (req, res,next) => {
+  try{
   cart.addorder(req.body).then(async (orders) => {
     let order = await cart.getorders(orders._id)
     console.log('in else razorpay')
@@ -373,24 +466,39 @@ router.get('/onlinepayment',verifylogin, (req, res) => {
       res.json({ order })
     })
   })
+}catch(err){
+  next(err)
+}
 })
-router.get('/orderdetails',verifylogin, (req, res) => {
+router.get('/orderdetails',verifylogin, (req, res,next) => {
+  try{
   let users = req.session.users
   cart.getallorder(users._id).then((order) => {
     console.log(order)
     res.render('user/orderdetails', { order, users, user: true })
   })
+}catch(err){
+  next(err)
+}
 })
-router.get('/cancelorder/:id',(req,res)=>{
+router.get('/cancelorder/:id',(req,res,next)=>{
+  try{
  cart.cancelorder(req.params.id).then((response)=>{
   res.redirect('/orderdetails')
  })
+}catch(err){
+  next(err)
+}
 })
-router.get('/viewOrderDetails/:id',verifylogin, (req, res) => {
+router.get('/viewOrderDetails/:id',verifylogin, (req, res,next) => {
+  try{
   let users = req.session.users
   cart.viewOrderDetails(req.params.id).then((orderDetails) => {
     res.render('user/order_detail', { orderDetails, users, user: true })
   })
+}catch(err){
+  next(err)
+}
 })
 // get login request
 
@@ -405,20 +513,29 @@ router.get('/signupOtp', (req, res) => {
 
 // user profile view
 
-router.get('/userprofile',verifylogin, (req, res) => {
+router.get('/userprofile',verifylogin, async(req, res,next) => {
+  try{
   users = req.session.users
-  res.render('user/userprofile', { users, user: true })
-})
-
+ let totalorders = await cart.getallorder(users._id)
+ let totalcart = await cart.getcart(users._id)
+let address = await cart.getAddress(users._id)
+ console.log(totalcart)
+  res.render('user/userprofile', { users,totalorders,totalcart,address, user: true })
+  }catch(err){
+    next(err)
+  }
+}),
 // edit userprofile
 
-router.post('/editprofile',verifylogin, (req, res) => {
+router.post('/editprofile',verifylogin, (req, res,next) => {
+  try{
+  let users = req.session.users
   let edited = req.body
-  console.log(edited)
-  userHelper.edituser(edited).then((data) => {
+  console.log(edited ,"hjzfgjhsbfgjsf-----sfgsdg-")
+  userHelper.edituser(users._id,edited).then((data) => {
     if (data) {
       console.log(data + ' updated users')
-      userHelper.userview(edited._Id).then((response) => {
+      userHelper.userview(uesrid).then((response) => {
         if (response) {
           req.session.users = response
           let users = req.session.users
@@ -427,6 +544,9 @@ router.post('/editprofile',verifylogin, (req, res) => {
       })
     }
   })
+}catch(err){
+  next(err)
+}
 })
 
 

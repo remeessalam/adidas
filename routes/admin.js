@@ -9,6 +9,13 @@ const productdetails = require('../adminHelpers/productHelper')
 const banner = require('../adminHelpers/bannerHelpers')
 const cart = require('../userHelper/cart');
 const order = require('../schemaModel/order');
+const verifyadmin = async(req,res,next)=>{
+  if(req.session.admin){
+    next()
+  }else{
+    res.redirect('/admin/adminlogin')
+  }
+}
 /* GET home page. */
 router.get('/', function (req, res, next) {
   if (req.session.admin) {
@@ -42,31 +49,31 @@ router.post('/login', (req, res) => {
     res.render('admin/adminLogin')
   }
 })
-router.get('/usermanagment', (req, res) => {
+router.get('/usermanagment',verifyadmin,(req, res) => {
 
   userdetails.getAllUserDetails().then((data) => {
     let allusers = data
 
-    if (req.session.admin) {
+    
       console.log(allusers)
       res.render('admin/adminusermanagment', { allusers, admin: true })
-    }
+    
   })
-  router.get('/blockuser/:id', (req, res) => {
+  router.get('/blockuser/:id', verifyadmin,(req, res) => {
     let userId = req.params.id
     console.log(userId)
     userdetails.blockuser(userId).then((response) => {
       res.json({ response })
     })
   })
-  router.get('/unblockuser/:id', (req, res) => {
+  router.get('/unblockuser/:id', verifyadmin,(req, res) => {
     let userId = req.params.id
     console.log(userId)
     userdetails.unblockuser(userId).then((response) => {
       res.json({ response })
     })
   })
-  router.get('/viewuser/:id', (req, res) => {
+  router.get('/viewuser/:id',verifyadmin, (req, res) => {
     let user = req.params.id
     console.log(user)
     userdetails.userview(user).then((response) => {
@@ -92,28 +99,24 @@ router.get('/logout', (req, res) => {
 })
 
 // product router start
-router.get('/allproducts', (req, res) => {
-  if (req.session.admin) {
+router.get('/allproducts',verifyadmin, (req, res) => {
+ 
     productdetails.getcategory().then()
     productdetails.getAllProducts().then((allProducts) => {
       console.log(allProducts)
       res.render('admin/products', { allProducts, admin: true })
     })
-  } else {
-    res.redirect('/admin/adminlogin')
-  }
+ 
 })
-router.get('/addproducts', (req, res) => {
-  if (req.session.admin) {
+router.get('/addproducts',verifyadmin, (req, res) => {
+ 
     productdetails.getcategory().then((category) => {
       console.log(category)
       res.render('admin/addproducts', { category, admin: true })
     })
-  } else {
-    res.redirect('/admin/adminlogin')
-  }
+  
 })
-router.post('/addproducts', (req, res) => {
+router.post('/addproducts', verifyadmin,(req, res) => {
   console.log(req.body)
   // console.log(req.files.image)
   productdetails.addProducts(req.body).then((data) => {
@@ -125,7 +128,7 @@ router.post('/addproducts', (req, res) => {
   })
   res.redirect('/admin/allproducts')
 })
-router.get('/viewproduct/:id', (req, res) => {
+router.get('/viewproduct/:id',verifyadmin, (req, res) => {
   let proId = req.params.id
   productdetails.viewproduct(proId).then((data) => {
     if (data) {
@@ -135,7 +138,7 @@ router.get('/viewproduct/:id', (req, res) => {
     }
   })
 })
-router.get('/editproduct/:id', (req, res) => {
+router.get('/editproduct/:id',verifyadmin, (req, res) => {
   let proId = req.params.id
   productdetails.viewproduct(proId).then((data) => {
     if (data) {
@@ -144,7 +147,7 @@ router.get('/editproduct/:id', (req, res) => {
     }
   })
 })
-router.post('/editproduct/:id', (req, res) => {
+router.post('/editproduct/:id',verifyadmin, (req, res) => {
   console.log(req.params.id)
   let proedit = req.body
   let proId = req.params.id
@@ -161,48 +164,48 @@ router.post('/editproduct/:id', (req, res) => {
     }
   })
 })
-router.get('/deleteproduct/:id', (req, res) => {
+router.get('/deleteproduct/:id', verifyadmin,(req, res) => {
   let proId = req.params.id
   console.log(proId)
   productdetails.deleteproduct(proId).then((response) => {
     res.redirect('/admin/allproducts/')
   })
 })
-router.post('/addbanner', (req, res) => {
+router.post('/addbanner',verifyadmin, (req, res) => {
   banner.addbanner(req.body).then((data) => {
     console.log(data)
     req.files.image.mv('./public/bannerimage/' + data._id + '.png')
   })
   res.redirect('/admin/banner')
 })
-router.get('/banner', (req, res) => {
+router.get('/banner',verifyadmin, (req, res) => {
   banner.getbanner().then((data) => {
     productdetails.getAllProducts().then((products) => {
       console.log(products + "hai")
       res.render('admin/banner', { products, data, admin: true })
     })
   })
-  router.post('/updatebanner/:id', (req, res) => {
+  router.post('/updatebanner/:id',verifyadmin, (req, res) => {
     banner.editbanner(req.params.id, req.body).then((data) => {
       console.log(data)
       res.redirect('/admin/banner')
     })
   })
-  router.get('/deletebanner/:id', (req, res) => {
+  router.get('/deletebanner/:id',verifyadmin, (req, res) => {
     banner.deletebanner(req.params.id).then((data) => {
       console.log('returned to admin page')
       res.redirect('/admin/banner')
     })
   })
 })
-router.get('/category', (req, res) => {
+router.get('/category',verifyadmin, (req, res) => {
   productdetails.getcategory().then((category) => {
     console.log(category)
     // let message = 'THIS CATEGORY IS ALREADY EXISTS'
     res.render('admin/category', { category, admin: true })
   })
 }) 
-router.post('/category', (req, res) => {
+router.post('/category', verifyadmin,(req, res) => {
   productdetails.addcategory(req.body).then((data) => {
     console.log(data.duplicate)
     if (data) {
@@ -217,20 +220,20 @@ router.post('/category', (req, res) => {
   })
   console.log(req.body)
 })
-router.get('/coupon', (req, res) => {
+router.get('/coupon',verifyadmin, (req, res) => {
   productdetails.getcoupon().then((data) => {
     console.log(data)
     res.render('admin/coupon', { data, admin: true })
   })
 
 })
-router.post('/addcoupon', (req, res) => {
+router.post('/addcoupon',verifyadmin, (req, res) => {
   productdetails.addcoupon(req.body).then((data) => {
     console.log('returned to admin js')
     res.redirect('/admin/coupon')
   })
 })
-router.get('/deletecoupon/:id', (req, res) => {
+router.get('/deletecoupon/:id',verifyadmin, (req, res) => {
   productdetails.deletecoupon(req.params.id).then((data) => {
     console.log('deleted')
     if (data) {
@@ -238,20 +241,20 @@ router.get('/deletecoupon/:id', (req, res) => {
     }
   })
 })
-router.get('/orders', (req, res) => {
+router.get('/orders',verifyadmin, (req, res) => {
   userdetails.getorders().then((response) => {
     console.log(response)
     res.render('admin/userOrders', { response, admin: true })
   })
 })
-router.get('/orderDetails/:id', (req, res) => {
+router.get('/orderDetails/:id',verifyadmin,(req, res) => {
   console.log(req.params.id)
   userdetails.viewOrder(req.params.id).then((order) => {
     console.log(order)
     res.render('admin/orderDetails', { order, admin: true })
   })
 })
-router.post('/changestatus', (req, res) => {
+router.post('/changestatus', verifyadmin,(req, res) => {
   console.log(req.body)
   userdetails.changestatus(req.body.id, req.body.status).then((response) => {
     console.log(response)

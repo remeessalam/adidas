@@ -32,9 +32,9 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="col-md-2">
+                    {{!-- <div class="col-md-2">
                         <input type="submit" class="profile-edit-btn" name="btnAddMore" value="block"/>
-                    </div>
+                    </div> --}}
                 </div>
                 <div class="row">
                     <div class="col-md-4">
@@ -61,10 +61,26 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6">
+                                                <label>Date Of Birth</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>{{users.dateofbirth}}</p>
+                                            </div>
+                                        </div>
+                                         <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Gender</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>{{users.gender}}</p>
+                                            </div>
+                                        </div>
+                                         <div class="row">
+                                            <div class="col-md-6">
                                                 <label>Phone</label>
                                             </div>
                                             <div class="col-md-6">
-                                                <p>{{users.phone}}</p>
+                                                <p>{{users.mobilenumber}}</p>
                                             </div>
                                         </div>
                                         <div class="row">

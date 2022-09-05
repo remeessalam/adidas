@@ -35,7 +35,7 @@
               <th scope="col">productName</th>
               <th scope="col">address</th>
              <th scope="col">Amount</th>
-              <th scope="col">cancel order</th>
+              <th scope="col">view order</th>
             </tr>
           </thead>
           <tbody>
@@ -60,8 +60,6 @@
               <td>{{this.totalamount}}</td>
               
               <td>
-                <a href="/admin/deleteorder/{{this._id}}" class="btn btn-danger"
-                  onclick="return confirm('are you sure to cancel this order ?')">cancel</a>
                   <a href="/admin/orderDetails/{{this._id}}" class="btn btn-dark"
                   >view</a>
               </td>

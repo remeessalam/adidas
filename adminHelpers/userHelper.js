@@ -40,11 +40,11 @@ module.exports = {
 
             })
         })
-    }, edituser: (edited) => {
+    }, edituser: (userid,edited) => {
         return new Promise((resolve, reject) => {
-            let { fname, lname, email, address, city, mobilenumber, pincode } = edited
-            userschema.findByIdAndUpdate(edited._Id, {
-                fname, lname, email, address, city, mobilenumber, pincode
+            let { fname, lname, gender, dateofbirth, mobilenumber } = edited
+            userschema.findByIdAndUpdate(userid, {
+                fname, lname, gender, dateofbirth,  mobilenumber
             }).then((response) => {
                 if (response) {
                     console.log('edited user')

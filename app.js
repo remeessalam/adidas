@@ -47,6 +47,10 @@ app.engine('hbs', hbs.engine({
       let data = date+""
       return data.slice(3, 16);
     },
+    dateof: function(date){
+      let data = date+""
+      return data.slice(0, 10);
+    },
     uppercase : (text )=>{
       let uppercase = text.toUpperCase()
       return uppercase
@@ -58,6 +62,10 @@ app.engine('hbs', hbs.engine({
       else{
         return 'Unblock'
       }
+    },
+    addr : (addres)=>{
+      let curr = addres[0].house
+      return curr
     }
     
   }

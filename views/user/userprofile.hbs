@@ -20,12 +20,13 @@
             <div class="col-md-6">
                 <div class="profile-head">
                     <h5>
-                        Kshiti Ghelani
+                        {{users.fname}}
                     </h5>
-                    <h6>
+                    {{!-- <h6>
                         Web Developer and Designer
-                    </h6>
-                    <p class="proile-rating">RANKINGS : <span>8/10</span></p>
+                    </h6> --}}
+                    <p class="proile-rating">TOTAL ORDERS : <span> {{ totalorders.length}}</span></p>
+                    <p class="proile-rating">ITEMS IN CART : <span>{{totalcart.product.length}}</span></p>
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
@@ -35,8 +36,7 @@
                 </div>
             </div>
             <div class="col-md-2">
-                <a href="#" class="btn btn-dark" name="btnAddMore" data-toggle="modal" data-target="#edituserModal">edit
-                    profile</a>
+                <a href="#" class="btn btn-dark" name="btnAddMore" data-toggle="modal" data-target="#edituserModal">Update details</a>
             </div>
         </div>
         <div class="row">
@@ -64,6 +64,22 @@
                         </div>
                         <div class="row">
                             <div class="col-md-6">
+                                <label>Date Of Birth</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{dateof users.dateofbirth}}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Gender</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{users.gender}}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
                                 <label>Phone</label>
                             </div>
                             <div class="col-md-6">
@@ -71,12 +87,14 @@
                             </div>
                         </div>
                         <div class="row">
+                            {{#each address}}
                             <div class="col-md-6">
-                                <label>address</label>
+                                <label>Shipping Address</label>
                             </div>
                             <div class="col-md-6">
-                                <p>{{users.address}}</p>
+                                <p>{{this.house }}<br>{{this.street}}<br>{{this.city}}<br>{{this.state}}<br>{{this.pincode}}</p>
                             </div>
+                            {{/each}}
                         </div>
                     </div>
                 </div>
@@ -94,63 +112,79 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="edituserModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
+<div class="modal fade" id="edituserModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit Profile</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
 
-<div class="container">
-    <div class="row">
-        <form class="col-10 mx-auto mt-5" action="/editprofile" method="post">
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="inputEmail4">Name</label>
-                    <input value="{{users.fname}}" type="text" class="form-control" name="fname" id="inputName"
-                        placeholder="name">
-                </div>
-                <div class="form-group col-md-10">
-                    <label for="inputEmail4">Email</label>
-                    <input value="{{users.email}}" type="" class="form-control" name="email" id="inputEmail4"
-                        placeholder="Email">
-                </div>
-            </div>
-            <div class="form-group col-md-7">
-                <label for="inputAddress">Address</label>
-                <input value="{{users.address}}" type="text" class="form-control" name="address" id="inputAddress"
-                    placeholder="address">
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="inputCity">City</label>
-                    <input value="{{users.city}}" type="text" class="form-control" name="city" id="inputCity"
-                        placeholder="city">
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="inputState">phone</label>
-                    <input value="{{users.mobilenumber}}" type="text" class="form-control" name="mobilenumber" id="inputCity"
-                        placeholder="mobilenumber">
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="inputZip">pincode</label>
-                    <input value="{{users.pincode}}" type="text" class="form-control" name="pincode" id="inputZip"
-                        placeholder="pincode">
-                    <input value="{{users._id}}" class="invisible" name="_Id" type="text">
-                </div>
-            </div>
-            <button type="submit" class="btn btn-primary mt-5">save</button>
-            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-        </form>
-    </div>
-</div>
+                <div class="container">
+                    <div class="row">
+                        <form class="col-10 mx-auto mt-5" action="/editprofile" method="post">
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="inputEmail4">First Name</label>
+                                    <input value="{{users.fname}}" type="text" class="form-control" name="fname"
+                                        id="inputName" placeholder="name">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputEmail4">Last Name</label>
+                                    <input value="{{users.lname}}" type="text" class="form-control" name="lname"
+                                        id="inputName" placeholder="Email">
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="gender">Gender</label>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <input value="male" type="radio" class="form-control" name="gender" id="gender"
+                                            checked>
+                                        <label for="gender">Male</label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input value="female" type="radio" class="form-control" name="gender"
+                                            id="inputAddress">
+                                        <label for="gender">Female</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="inputCity">Date Of Birth</label>
+                                    <div class="row">
+                                        <div class="col md-2">
+                                            <input value="{{dateofbirth}}" type="date" class="form-control"
+                                                name="dateofbirth" id="" placeholder="date">
+                                        </div>
+                                    </div>
 
-      </div>
-      
+                                </div>
+                                <div class="form-group col-md-5">
+                                    <label for="inputState">phone</label>
+                                    <input value="{{users.mobilenumber}}" type="text" class="form-control"
+                                        name="mobilenumber" id="inputCity" placeholder="mobilenumber">
+                                </div>
+                                {{!-- <div class="form-group col-md-4">
+                                    <label for="inputZip">pincode</label>
+                                    <input value="{{users.pincode}}" type="text" class="form-control" name="pincode"
+                                        id="inputZip" placeholder="pincode">
+                                    <input value="{{users._id}}" class="invisible" name="_Id" type="text">
+                                </div> --}}
+                            </div>
+                            <button type="submit" class="btn btn-primary mt-1">save</button>
+                            <button type="button" class="btn btn-primary mt-1" data-dismiss="modal">Close</button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
     </div>
-  </div>
 </div>

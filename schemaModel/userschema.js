@@ -13,13 +13,16 @@ const userSchema = new mongoose.Schema({
     lname:{
         type : String
     },
+    dateofbirth:{
+        type : Date
+    },
+    gender:{
+        type : String
+    },
     email:{
         type : String
     },
     password :{
-        type : String
-    },
-    address :{
         type : String
     },
     mobilenumber :{
