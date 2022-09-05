@@ -380,7 +380,11 @@ router.get('/orderdetails',verifylogin, (req, res) => {
     console.log(order)
     res.render('user/orderdetails', { order, users, user: true })
   })
-
+})
+router.get('/cancelorder/:id',(req,res)=>{
+ cart.cancelorder(req.params.id).then((response)=>{
+  res.redirect('/orderdetails')
+ })
 })
 router.get('/viewOrderDetails/:id',verifylogin, (req, res) => {
   let users = req.session.users

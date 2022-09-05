@@ -4,6 +4,8 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
   crossorigin="anonymous"></script>
+  <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+
 <section>
     
     <div class="container " style="margin-top:10rem ;">
@@ -19,7 +21,6 @@
                         <th scope="col">productName</th>
                         <th scope="col">price</th>
                         <th scope="col">color</th>
-                        <th scope="col">brand</th>
                         <th scope="col">category</th>
                          <th scope="col">quantity</th>
                         <th scope="col">edit/delete</th>
@@ -32,7 +33,6 @@
                         <td>{{this.productName}}</td>
                         <td>{{this.price}} $</td>
                         <td>{{this.color}}</td>
-                       <td>{{this.brand}}</td>
                         <td>{{this.category.categoryname}}</td>
                         <td>{{this.quantity}}</td>
                         {{!-- <td><img src="/productimage/{{this.image}}" alt=""></td> --}}

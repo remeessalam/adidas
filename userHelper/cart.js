@@ -10,6 +10,7 @@ const { response } = require('../app')
 const { resolve } = require('path')
 const { ifError } = require('assert')
 const wishlist = require('../schemaModel/wishlist')
+const { Promise } = require('mongoose')
 const env = require('dotenv').config()
 var instance = new Razorpay({ 
     key_id: process.env.key_id,
@@ -254,9 +255,21 @@ const obj = {
     getallorder: (id) => {
         console.log(id+"------")
         return new Promise((resolve, reject) => {
-            order.find({ user:id }).populate('products.productid').populate('address').lean().then((data) => {
+            order.find({ user:id ,order:true}).populate('products.productid').populate('address').lean().then((data) => {
                 console.log('fount all products' + data)
                 resolve(data)
+            })
+        })
+    },
+    cancelorder : (orderid)=>{
+        return new Promise((resolve,reject)=>{
+            order.findByIdAndUpdate(orderid,{order:false}).then((response)=>{
+                if(response){
+                    resolve(response)
+                }else{
+                    response = false
+                    resolve(response)
+                }
             })
         })
     },

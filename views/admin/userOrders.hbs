@@ -31,6 +31,7 @@
               <th scope="col">payment</th>
               <th scope="col">purchase date</th>
               <th scope="col">status</th>
+              <th scope="col">order</th>
               <th scope="col">productName</th>
               <th scope="col">address</th>
              <th scope="col">Amount</th>
@@ -44,17 +45,23 @@
               <td>{{this.payment}}</td>
               <td>{{date this.createdAt}}</td>
               <td>{{this.status}}</td>
-              
+              {{!-- <td>{{this.order}}</td> --}}
+              {{#if this.order}}
+              <td style="color:green">online</td>
+              {{else}}
+              <td style="color:red">order canceled</td>
+              {{/if}}
               <td >
                 {{#each products}}
                 <p><a style="text-decoration:none ;color:orange" href="/viewproduct/{{this.productid._id}}">{{this.productid.productName}}</a></p>
                 {{/each}}
                 </td>
-              <td><p>{{this.address.house}}<br>{{this.address.street}}<br>{{this.address.city}}<br>{{this.address.state}}<br>{{this.address.pincode}}</p></td>
+              <td><p>{{this.address.firstName}}<br>{{this.address.house}}<br>{{this.address.street}}<br>{{this.address.city}}<br>{{this.address.state}}<br>{{this.address.pincode}}</p></td>
               <td>{{this.totalamount}}</td>
+              
               <td>
-                <a href="/admin/deletebanner/{{this._id}}" class="btn btn-danger"
-                  onclick="return confirm('are you sure to delete this banner ?')">cancel</a>
+                <a href="/admin/deleteorder/{{this._id}}" class="btn btn-danger"
+                  onclick="return confirm('are you sure to cancel this order ?')">cancel</a>
                   <a href="/admin/orderDetails/{{this._id}}" class="btn btn-dark"
                   >view</a>
               </td>

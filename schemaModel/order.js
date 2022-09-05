@@ -23,6 +23,10 @@ const orderSchema = mongoose.Schema({
     status : {
         type : String
     },
+    order : {
+        type : Boolean,
+        default : true
+    },
     products : [{ 
         productid :{
             type : mongoose.Schema.Types.ObjectId,
