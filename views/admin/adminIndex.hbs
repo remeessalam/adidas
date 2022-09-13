@@ -1,16 +1,25 @@
 <div class="container">
     <div class="row">
         
-        <div class="col-md-10">
+        <div class="col-md-8">
             <h1 style="margin-top:10rem">Order Chart</h1>
             <canvas id="myLineChart" style="width:100%;max-width:700px;margin-top:3rem"></canvas>
+        </div>
+        <div class="col md-2 p-5">
+            <button class="btn btn-outline-warning btn-lg" style="margin-top:10rem ;align-items:center" type="button" id="MyButton">get report</button>
         </div>
     </div>
 </div>
 
 
 
-
+{{!-- <div class="container">
+    <div class="row">
+        <div class="col md-5">
+            <button type="button" id="MyButton">get report</button>
+        </div>
+    </div>
+</div> --}}
 
 
 
@@ -75,4 +84,67 @@
         })
     }
 
+    const getreport  = async function(){
+
+    }
+
 </script>
+<script>
+//=========== report Generae csv and Download it  =========== //
+
+
+            const objectToCsv = function (data) {
+                const csvRows = [];
+                //get the headers 
+                const headers = Object.keys(data[0]);
+                csvRows.push(headers.join(','));
+
+                //loop over the rows
+
+                for (const row of data) {
+                    const values = headers.map(header => {
+                        const escaped = ('' + row[header]).replace(/"/g, '\\"')
+                        return `"${escaped}"`
+                    })
+                    csvRows.push(values.join(','))
+                }
+                return csvRows.join('\n')
+            }
+            const download = function (data) {
+                const blob = new Blob([data], { type: 'text/csv' });
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.setAttribute('hidden', '');
+                a.setAttribute('href', url);
+                a.setAttribute('download', 'download.csv');
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+
+            }
+            async function getReport() {
+                let e = await fetch('/admin/report')
+                console.log("worked")
+                e = await e.json()
+                console.table(e)
+                const data = e.reportsdata.map(row => ({
+                    Userid : row.UserId,
+                    UserName: row.UserName,
+                    UserMobile:row.UserMobileNo,
+                    payment:row.PaymentMethod,
+                    TotalAmount: row.TotalAmount,
+                    Discount: row.Discount,
+                    Status:row.Status,
+                    ProductName:row.ProductName,
+                    ProductPrice:row.ProductPrice,
+                    productQuantity:row.ProductQuantity
+            }));
+                const csvData = objectToCsv(data)
+                download(csvData)
+            }
+
+
+            const button = document.getElementById('MyButton');
+            button.addEventListener('click', getReport)
+
+            </script>

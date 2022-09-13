@@ -39,9 +39,19 @@ app.engine('hbs', hbs.engine({
     totalamounts : (product)=>{
       let subtotal = subtotal(product)
     },
-    
+    discountedamount :(product,totalamount,discount)=>{
+      let subtotal = 0;
+      discount=!discount?0:discount
+      console.log(JSON.stringify(product)+'haiiiii');
+      for (let i = 0; i < product.length; i++) {
+        subtotal = subtotal +parseInt(product[i].productid.price) * product[i].quantity;
+        console.log('hai')
+      }
+        let savedamount = totalamount/1-discount/100
+        return (subtotal-savedamount).toFixed()
+    },
     json: function (carts) {
-      return JSON.stringify(carts);
+      return JSON.stringify(carts);  
     },
     date: function(date){
       let data = date+""
@@ -50,6 +60,10 @@ app.engine('hbs', hbs.engine({
     dateof: function(date){
       let data = date+""
       return data.slice(0, 10);
+    },
+    dateofadmin: function(date){
+      let data = date+""
+      return data.slice(0, 15);
     },
     uppercase : (text )=>{
       let uppercase = text.toUpperCase()
@@ -66,6 +80,9 @@ app.engine('hbs', hbs.engine({
     addr : (addres)=>{
       let curr = addres[0].house
       return curr
+    },
+    inc : (value)=>{
+      return parseInt(value) + 1;
     }
     
     

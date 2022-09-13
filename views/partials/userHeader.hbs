@@ -155,12 +155,22 @@
 	function cartCount(){
 		axios.get('/alldetails').then((e)=>{
 			console.log(e)
-			console.log(e.data.details.totalcart.product.length)
-			document.getElementById('wishlist').innerHTML=e.data.details.totalwishlist.product.length
+			if(e.data.details.totalwishlist.product){
+				document.getElementById('wishlist').innerHTML=e.data.details.totalwishlist.product.length
+			}else{
+				document.getElementById('wishlist').innerHTML=0
+			}
+			if(e.data.details.totalorders){
+				document.getElementById('order').innerHTML=e.data.details.totalorders.length
+			}else{
+				document.getElementById('order').innerHTML=0
+			}
+			if(e.data.details.totalcart.product){
 			document.getElementById('cart').innerHTML=e.data.details.totalcart.product.length
-			document.getElementById('order').innerHTML=e.data.details.totalorders.length
-			
+			}else{
+			document.getElementById('cart').innerHTML=0
 
+			}
 		})
 	}
 </script>

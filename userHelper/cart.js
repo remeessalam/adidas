@@ -69,6 +69,7 @@ const obj = {
         return new Promise(async (resolve, reject) => {
             console.log(userId + "---hsklfhaskjfsahjasdjkfaaskf")
             let carts = await cart.findOne({ user: userId }).populate('product.productid').lean()
+            console.log(carts+"new")
             if (carts) {
 
                 console.log(carts + "getcart if in")
@@ -168,7 +169,7 @@ const obj = {
         })
     },
     gettotalamount: (userid, discount) => {
-        console.log(discount)
+        console.log(discount,'discount')
         return new Promise(async (resolve, reject) => {
             let cart = await obj.getcart(userid)
 
@@ -178,7 +179,7 @@ const obj = {
                     acc += curr.productid.price * curr.quantity
                     return acc
                 }, 0)
-                if (discount > 0) {
+                if (discount && discount > 0) {
                     console.log(total)
                     totalprice = total * discount / 100
                     total = total - totalprice
@@ -213,7 +214,7 @@ const obj = {
     getAddress: (id) => {
         return new Promise((resolve, reject) => {
             address.find({ user: id }).lean().then((data) => {
-                console.log(data)
+                console.log(data,'adress')
                 resolve(data)
             })
         })
@@ -375,6 +376,60 @@ const obj = {
             }).catch((err)=>{
                 reject(err)
             })
+        })
+    },
+    report:()=>{
+        return new Promise(async(resolve, reject) => {
+            let report = await order.aggregate([
+                
+                    {
+                      '$match': {
+                        'order': true
+                      }
+                    }, {
+                      '$unwind': {
+                        'path': '$products'
+                      }
+                    }, {
+                      '$lookup': {
+                        'from': 'products', 
+                        'localField': 'products.productid', 
+                        'foreignField': '_id', 
+                        'as': 'result'
+                      }
+                    }, {
+                      '$unwind': {
+                        'path': '$result'
+                      }
+                    }, {
+                      '$lookup': {
+                        'from': 'addresses', 
+                        'localField': 'address', 
+                        'foreignField': '_id', 
+                        'as': 'result2'
+                      }
+                    }, {
+                      '$unwind': {
+                        'path': '$result2'
+                      }
+                    }, {
+                      '$project': {
+                        '_id': 0, 
+                        'UserId': '$user', 
+                        'UserName': '$result2.firstName', 
+                        'UserMobileNo': '$result2.mobileNumber', 
+                        'PaymentMethod': '$payment', 
+                        'TotalAmount': '$totalamount', 
+                        'Discount': '$discount', 
+                        'Status': '$status', 
+                        'ProductName': '$result.productName', 
+                        'ProductPrice': '$result.price', 
+                        'ProductQuantity': '$products.quantity'
+                      }
+                    }
+                  
+            ])
+            resolve(report)
         })
     }
 }

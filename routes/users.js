@@ -15,7 +15,7 @@ const { nextTick } = require('process');
 const verifylogin = async (req, res, next) => {
   if (req.session.login) {
     let users = req.session.users
-    console.log(users)
+    console.log(users,'user')
     let status = await userHelper.userview(users._id)
     if (status.status === 'active') {
       req.session.login = true
@@ -169,6 +169,7 @@ router.get('/category', (req, res, next) => {
     productdetails.getAllProducts().then((data) => {
       console.log(data)
       productdetails.getcategory().then((category) => {
+        
         res.render('user/category', { category, data, users, user: true })
       })
     })
@@ -180,8 +181,9 @@ router.get('/categoryprods/:id', (req, res, next) => {
     let users = req.session.users
     console.log(req.params.id)
     productdetails.getCategoryProds(req.params.id).then((data) => {
-      productdetails.getcategory().then((category) => {
-        res.render('user/category', { category, data, users, user: true })
+      productdetails.getonecategory(req.params.id).then((category) => {
+        console.log(category)
+        res.render('user/categoryproduct', { category, data, users, user: true })
       })
 
     })
@@ -375,29 +377,24 @@ router.get('/removeaddress/:id', verifylogin, (req, res, next) => {
     next(err)
   }
 })
-router.get('/checkout', verifylogin, async (req, res, next) => {
-  try {
-    console.log('-----------------------')
+router.get('/checkout', verifylogin, (req, res) => {
+
+    
     let discount = req.session.discount
-    console.log(coupon) + "-------sjfhasjfajsnfajd"
+    
     let users = req.session.users
-    if (users) {
+    
       cart.getcart(users._id).then((data) => {
-        console.log(data)
+        console.log(data,'data')
         cart.getAddress(users._id).then(async (address) => {
           let totalamount = await cart.gettotalamount(users._id, discount)
-          console.log(totalamount, '---------')
-          console.log(address + "hfa;lsdjfhalsdjfhlasdjhf")
-          res.render('user/checkout', { users, address, totalamount, discount, data, user: true })
-        })
+         
+          res.render('user/checkoutpage', { users, address, totalamount, discount, data, user: true })
+        }).catch((err)=>{console.log(err,'-------')})
 
-      })
-    } else {
-      res.redirect('/login')
-    }
-  } catch (err) {
-    next(err)
-  }
+      }).catch((err)=>{console.log(err,'----h---')})
+  
+  
 
 })
 router.post('/checkCoupon', verifylogin, (req, res, next) => {

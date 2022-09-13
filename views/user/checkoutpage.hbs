@@ -119,6 +119,7 @@
                             <li><a href="#"> {{this.productid.productName}}<span class="middle">x
                                         {{this.quantity}}</span> <span class="last">{{total this.quantity
                                         this.productid.price}}</span></a></li></span></a></li>
+                                        
                             {{!-- <li><a href="#">Fresh Tomatoes <span class="middle">x 02</span> <span
                                         class="last">$720.00</span></a></li>
                             <li><a href="#">Fresh Brocoli <span class="middle">x 02</span> <span
@@ -128,8 +129,9 @@
                         <ul class="list list_2">
                             <li><a href="#">Subtotal <span>${{subTotal data.product}}.00</span></a></li>
                            
-                            <li><a href="#">Coupon Discount <span>{{discount}} </span></a></li>
-                            <li><a href="#">Total <span>${{totalamount}}</span>%</a></li>
+                            <li><a href="#">Coupon Discount <span>{{discount}} %</span></a></li>
+                            <li><a href="#">Saved Amount <span>{{discountedamount data.product totalamount discount}} </span></a></li>
+                            <li><a href="#">Total <span>${{totalamount}}</span></a></li>
                         </ul>
                         <div class="payment_item">
                             <div class="radion_btn">
@@ -149,7 +151,7 @@
                                 <img src="img/product/card.jpg" alt="">
                                 <div class="check"></div>
                             </div>
-                            <p>Pay via PayPal; you can pay with your credit card if you don’t have a PayPal
+                            <p>Pay via razorPay; you can pay with your credit card if you don’t have a razorPay
                                 account.</p>
                         </div>
                         {{!-- <div class="creat_account">

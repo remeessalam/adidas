@@ -808,7 +808,9 @@
 							</div>
 							<h4>{{this.product.productName}}</h4>
 							<div class="add-bag d-flex align-items-center justify-content-center">
-								<a class="add-btn" href=""><span class="ti-bag"></span></a>
+								{{!-- <a class="ti-bag" href="javascript:;" onclick="addevent('{{this.product._id}}')"><span
+											class="ti-bag"></span></a> --}}
+								<a class="add-btn" href="javascript:;" onclick="addevent('{{this.product._id}}')"><span class="ti-bag"></span></a>
 								<span class="add-text text-uppercase">Add to Bag</span>
 							</div>
 						</div>

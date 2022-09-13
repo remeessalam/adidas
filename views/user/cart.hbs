@@ -75,7 +75,7 @@
                                     <input type="text" id="MyText" name="coupons" {{#each coupon}}
                                         placeholder="{{this.couponCode}}" {{/each}}>
                                     <button style="border:none" class="primary-btn"
-                                        onclick="checkCoupon()">Apply</button>
+                                        onclick="checkCoupon('{{subTotal cartsitems.product}}')">Apply</button>
                                 </div>
                             </td>
                         </tr>
@@ -129,11 +129,16 @@
                                 </div> --}}
                                 <div>
 
-                                    <table style="border:">
+                                    <table style="">
                                         <tr>
 
-                                            <td>Discount</td>
+                                            <td>Discount% </td>
                                             <td><input id="discountadd" name="discount" style="border: none" type="text"
+                                                    value=""></td>
+                                        </tr>
+                                         <tr>
+                                            <td>Amount saved</td>
+                                            <td><input id="discountprice" name="discount" style="border: none" type="text"
                                                     value="0 "></td>
                                         </tr>
                                         <tr>
@@ -254,10 +259,13 @@
                 if (e.data.response.status) {
                     let discount = e.data.response.data.discount
                     document.getElementById('discountadd').value = discount
+                    let savedamount = e.data.totalamount/(1-(discount/100))
+                    
+                    document.getElementById('discountprice').value = (savedamount*discount/100).toFixed()
                     console.log(e.data.response.totalamount)
 
-                    console.log(e.data.response.totalamount)
-                    document.getElementById("totalAmt").value = e.data.totalamount
+                   
+                    document.getElementById("totalAmt").value = (e.data.totalamount).toFixed()
                     document.getElementById("couponid").value = e.data.response.data._id
                     swal({
                         title: "coupon added!",
@@ -296,19 +304,3 @@
 
 
 
-swal({
-title: "Are you sure?",
-text: "Once deleted, you will not be able to recover this imaginary file!",
-icon: "warning",
-buttons: true,
-dangerMode: true,
-})
-.then((willDelete) => {
-if (willDelete) {
-swal("Poof! Your imaginary file has been deleted!", {
-icon: "success",
-});
-} else {
-swal("Your imaginary file is safe!");
-}
-});

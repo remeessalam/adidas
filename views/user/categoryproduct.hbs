@@ -1,0 +1,43 @@
+<div class="container" style="margin-top: 10rem;">
+    <h1 style="color:orange ;"><b>{{ uppercase category.categoryname}}</b></h1>
+    
+    <div class="row">
+        <div class="col-xl-9 col-lg-8 col-md-7">
+				<ul id="myUL">
+				<section class="lattest-product-area pb-40 category-list">
+					<div class="row">
+						{{#each data}}
+						<div class="col-lg-4 col-md-4 f">
+							<div class="single-product">
+								<img class="img-fluid" src="/productsimage/{{this._id}}.jpg" alt="">
+								<div class="product-details">
+									<h6>{{this.productName}}</h6>
+									<div class="price">
+										<h6>{{this.price}}.00 $</h6>
+										{{!-- <h6 class="l-through">$210.00</h6> --}}
+										<li><a href="">{{this.category.categoryname}}</a></li>
+									</div>
+									<div class="prd-bottom">
+										<a href="javascript:;" onclick="myEvent('{{this._id}}')" class="social-info">
+											<span class="ti-bag"></span>
+											<p class="hover-text">cart</p>
+										</a>
+										<a href="javascript:;" onclick="addwishList('{{this._id}}')" class="social-info">
+											<span class="lnr lnr-heart"></span>
+											<p class="hover-text">Wishlist</p>
+										</a>
+										<a href="/viewproduct/{{this._id}}" class="social-info">
+											<span class="lnr lnr-move"></span>
+											<p class="hover-text">product</p>
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						{{/each}}
+					</div>
+				</section>
+				</ul>
+			</div>
+    </div>
+</div>

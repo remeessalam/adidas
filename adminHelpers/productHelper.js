@@ -117,6 +117,16 @@ module.exports = {
             })
         })
     }, 
+    getonecategory: (catid) => {
+        return new Promise(async (resolve, reject) => {
+            Category.findById(catid).lean().then((categoryname)=>{
+                resolve(categoryname)
+            }).catch((err)=>{
+                reject(err)
+            })
+           
+        })
+    },
     addcoupon: (coupondetails) => {
         return new Promise((resolve, reject) => {
             addCoupon = new coupon({
