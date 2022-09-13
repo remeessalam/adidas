@@ -129,7 +129,7 @@
                             <li><a href="#">Subtotal <span>${{subTotal data.product}}.00</span></a></li>
                            
                             <li><a href="#">Coupon Discount <span>{{discount}} </span></a></li>
-                            <li><a href="#">Total <span>${{totalamount}}.00</span>%</a></li>
+                            <li><a href="#">Total <span>${{totalamount}}</span>%</a></li>
                         </ul>
                         <div class="payment_item">
                             <div class="radion_btn">
@@ -152,12 +152,12 @@
                             <p>Pay via PayPal; you can pay with your credit card if you don’t have a PayPal
                                 account.</p>
                         </div>
-                        <div class="creat_account">
+                        {{!-- <div class="creat_account">
                             <input type="checkbox" id="f-option4" name="selector">
                             <label for="f-option4">I’ve read and accept the </label>
                             <a href="#">terms & conditions*</a>
-                        </div>
-                        <button style="border: 0;" onclick="goaxios('{{data._id}}','{{totalamount}}','{{discount}}')">Proceed to Paypal</button>
+                        </div> --}}
+                        <button class="btn btn-warning" style="border: o;" onclick="goaxios('{{data._id}}','{{totalamount}}','{{discount}}')">Proceed To Order</button>
                     </div>
                 </div>
             </div>
@@ -167,7 +167,7 @@
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
     
-
+ 
 
 <script>
 

@@ -27,6 +27,7 @@
                     </h6> --}}
                     <p class="proile-rating">TOTAL ORDERS : <span> {{ totalorders.length}}</span></p>
                     <p class="proile-rating">ITEMS IN CART : <span>{{totalcart.product.length}}</span></p>
+                    <p class="proile-rating">ITEMS IN WISHLIST : <span>{{totalwishlist.product.length}}</span></p>
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
@@ -35,13 +36,19 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-md-2">
-                <a href="#" class="btn btn-dark" name="btnAddMore" data-toggle="modal" data-target="#edituserModal">Update details</a>
-            </div>
+            {{!-- <div class="col-md-2">
+                <a href="#" class="btn btn-dark" name="btnAddMore" data-toggle="modal"
+                    data-target="#edituserModal">Update details</a>
+            </div> --}}
         </div>
         <div class="row">
             <div class="col-md-4">
-
+                <a href="/manageaddress" class="btn btn-light mb-2"
+                    style="color:rgb(19, 12, 12);text-decoration:none ;background:none">Manage Addresses</a> <br>
+                {{!-- <a href="/changepassword" class="btn btn-light mb-2"
+                    style="color:rgb(19, 16, 16);text-decoration:none">Change Password</a><br> --}}
+                <a href="#" class="btn btn-light" name="btnAddMore" data-toggle="modal"
+                    data-target="#edituserModal">Update details</a>
             </div>
             <div class="col-md-8">
                 <div class="tab-content profile-tab" id="myTabContent">
@@ -87,15 +94,17 @@
                             </div>
                         </div>
                         <div class="row">
-                            {{#each address}}
+
                             <div class="col-md-6">
-                                <label>Shipping Address</label>
+                                <label>Address</label>
                             </div>
                             <div class="col-md-6">
-                                <p>{{this.house }}<br>{{this.street}}<br>{{this.city}}<br>{{this.state}}<br>{{this.pincode}}</p>
+                                <p>{{oneaddress.house}}<br>{{oneaddress.street}}<br>{{oneaddress.city}}<br>{{oneaddress.state}}<br>{{oneaddress.pincode}}
+                                </p>
                             </div>
-                            {{/each}}
+
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -126,7 +135,7 @@
 
                 <div class="container">
                     <div class="row">
-                        <form class="col-10 mx-auto mt-5" action="/editprofile" method="post">
+                        <form class="col-10 mx-auto mt-5" id="updatedetails" action="/editprofile" method="post">
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="inputEmail4">First Name</label>
@@ -188,3 +197,58 @@
         </div>
     </div>
 </div>
+
+
+
+
+
+
+<script>
+    $().ready(function () {
+
+        $("#updatedetails").validate({
+            // in 'rules' user have to specify all the constraints for respective fields
+            rules: {
+                fname: {
+                    required: true
+                },
+                lname: {
+                    required: true
+                },
+                dateofbirth: {
+                    required: true,
+                },
+                mobilenumber: {
+                    required: true,
+                    minlength: 3
+                },
+                agree: "required"
+            },
+            // in 'messages' user have to specify message as per rules
+            messages: {
+                fName: {
+                    required: 'enter firstname'
+                },
+                lName: {
+                    required: "enter lastname"
+                },
+                dateofbirth: {
+                    required: " please fill up this feild",
+                },
+                mobilenumber: {
+                    required: 'enter your mobile number',
+                    minlength: 'enter 10 digits',
+                    maxlength: 'more than 10'
+                },
+                agree: "Please accept our policy"
+            }
+        });
+    });
+
+
+
+
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>

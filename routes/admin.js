@@ -38,14 +38,24 @@ router.post('/login', (req, res) => {
     let admin = req.body
     console.log(admin)
     credentialCheck.dologin(admin).then((response) => {
-      if (response) {
+      if (response.status) {
         req.session.admin = true
         req.session.admindetails = req.body
         res.redirect('/admin/')
+      }else{
+        req.session.admin= false
+        res.redirect('/admin/adminLogin')
       }
     })
   } else {
-    req.session.admin = true
+    req.session.admin = false
+    res.redirect('/admin/adminLogin')
+  }
+})
+router.get('/adminLogin',(req,res)=>{
+  if(req.session.admin){
+    res.redirect('/admin/')
+  }else{
     res.render('admin/adminLogin')
   }
 })

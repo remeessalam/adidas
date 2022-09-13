@@ -1,7 +1,9 @@
 <div class="container">
     <div class="row">
+        
         <div class="col-md-10">
-            <canvas id="myLineChart" style="width:100%;max-width:700px;margin-top:10rem"></canvas>
+            <h1 style="margin-top:10rem">Order Chart</h1>
+            <canvas id="myLineChart" style="width:100%;max-width:700px;margin-top:3rem"></canvas>
         </div>
     </div>
 </div>
@@ -34,6 +36,7 @@
     document.addEventListener("DOMContentLoaded", charts)
     function charts() {
         axios.get('/admin/orderChart').then((orders) => {
+            console.log(orders)
             var result = [];
             orders.data.reduce(function (acc, curr) {
                 if (!acc[curr.createdAt.slice(0, 10)]) {
@@ -65,7 +68,7 @@
                 options: {
                     legend: { display: false },
                     scales: {
-                        yAxes: [{ ticks: { min: 0, max: 10} }],
+                        yAxes: [{ ticks: { min: 0, max: 30} }],
                     }
                 }
             });

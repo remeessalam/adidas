@@ -38,12 +38,14 @@ module.exports = {
             products.findById(proId).populate('category').lean().then((data) => {
                 if (data) {
                     console.log('product found');
-                    resolve(data)
+                    resolve(data)   
                 } else {
-                    console.log('product not found');
+                    console.log('product not found'); 
                 }
-            })
-
+            }).catch((err)=>{
+                reject(err)
+            }) 
+           
         })
     },
     editproduct: (proId, proedit) => {
@@ -110,6 +112,8 @@ module.exports = {
             products.find({ category: id }).lean().then((data) => {
                 console.log(JSON.stringify(data) + "--------------------------------")
                 resolve(data)
+            }).catch((err)=>{
+                reject (err)
             })
         })
     }, 

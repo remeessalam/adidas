@@ -11,10 +11,12 @@ const { resolve } = require('path')
 const { ifError } = require('assert')
 const wishlist = require('../schemaModel/wishlist')
 const { Promise } = require('mongoose')
+const { nextTick } = require('process')
+const { error } = require('console')
 const env = require('dotenv').config()
-var instance = new Razorpay({ 
+var instance = new Razorpay({
     key_id: process.env.key_id,
-    key_secret : process.env.key_secret
+    key_secret: process.env.key_secret
 });
 
 const obj = {
@@ -23,10 +25,10 @@ const obj = {
             duplicate: false
         }
 
-        return new Promise(async (resolve, reject) => {
-            let carts = await cart.findOne({ user: userId }).populate('product.productid')
+        return new Promise((resolve, reject) => {
+            cart.findOne({ user: userId }).populate('product.productid').then(async(carts)=>{
             if (carts) {
-                console.log('hai')
+                console.log(cart + 'hai')
                 let cartproduct = await cart.findOne({ user: userId, 'product.productid': proId }).populate('product.productid')
                 console.log(cartproduct + 'in first cart if')
                 if (cartproduct) {
@@ -40,8 +42,8 @@ const obj = {
                         console.log(data + 'cart updated')
                         resolve(response)
                     })
-                } 
-            } 
+                }
+            }
             else {
                 let user = userId
                 let productid = proId
@@ -57,11 +59,15 @@ const obj = {
                     resolve(response)
                 })
             }
+        }).catch((err)=>{
+            reject(err)
+        })
+            
         })
     },
     getcart: (userId) => {
         return new Promise(async (resolve, reject) => {
-            console.log(userId+"---hsklfhaskjfsahjasdjkfaaskf")
+            console.log(userId + "---hsklfhaskjfsahjasdjkfaaskf")
             let carts = await cart.findOne({ user: userId }).populate('product.productid').lean()
             if (carts) {
 
@@ -98,9 +104,9 @@ const obj = {
             }
         })
     },
-    deletecartproduct: (proid, userid) => {
+    deletecartproduct: (proid, userId) => {
         return new Promise(async (resolve, reject) => {
-            let cartitems = await cart.updateOne({ user: userid, 'product.productid': proid }, { $pull: { product: { productid: proid } } }).then((data) => {
+            let cartitems = await cart.updateOne({ userid: userId, 'product.productid': proid }, { $pull: { product: { productid: proid } } }).then((data) => {
                 console.log('cartdeleted')
             })
         })
@@ -113,7 +119,7 @@ const obj = {
             let list = await wishlist.findOne({ userid: userId })
             if (list) {
                 console.log('hai---------')
-                let listproduct = await wishlist.findOne({ user: userId, product: prodid })
+                let listproduct = await wishlist.findOne({ userid: userId, product: prodid })
                 console.log(listproduct + 'in first cart if')
                 if (listproduct) {
                     console.log('if in cartproduct ' + listproduct)
@@ -121,8 +127,8 @@ const obj = {
                     resolve(response)
                 } else {
                     console.log('in else in cart product not in array')
-   
-                    wishlist.findOneAndUpdate({ userid: userId }, { $push: {product: prodid } }).then((data) => {
+
+                    wishlist.findOneAndUpdate({ userid: userId }, { $push: { product: prodid } }).then((data) => {
                         console.log(data + 'cart updated')
                         resolve(response)
                     })
@@ -134,7 +140,7 @@ const obj = {
                 console.log(items)
                 wishlists = new wishlist({
                     userid,
-                    product:items
+                    product: items
 
                 })
                 wishlists.save().then((data) => {
@@ -155,7 +161,7 @@ const obj = {
     deletefavorite: (prodid, user) => {
         return new Promise((resolve, reject) => {
             console.log(prodid, user)
-            wishlist.updateOne({ userid: user, product: prodid }, { $pull: { product: prodid  } }).then((response) => {
+            wishlist.updateOne({ userid: user, product: prodid }, { $pull: { product: prodid } }).then((response) => {
                 console.log(response)
                 resolve(response)
             })
@@ -220,6 +226,18 @@ const obj = {
             })
         })
     },
+    editAddress: (addresses) => {
+        try {
+            return new Promise((resolve, reject) => {
+                address.findByIdAndUpdate(addresses.id, addresses).then((response) => {
+                    console.log('address updated')
+                    resolve(response)
+                })
+            })
+        } catch (err) {
+            next(err)
+        }
+    },
     addorder: (orderdetails, userid) => {
         console.log(orderdetails)
         return new Promise(async (resolve, reject) => {
@@ -249,27 +267,31 @@ const obj = {
             order.findById(orderid).populate('products.productid').populate('address').lean().then((data) => {
                 console.log('order founded' + data)
                 resolve(data)
+            }).catch((err)=>{
+                reject(err)
             })
         })
     },
     getallorder: (id) => {
-        console.log(id+"------")
+        console.log(id + "------")
         return new Promise((resolve, reject) => {
-            order.find({ user:id ,order:true}).populate('products.productid').populate('address').lean().then((data) => {
+            order.find({ user: id, order: true }).populate('products.productid').populate('address').lean().then((data) => {
                 console.log('fount all products' + data)
                 resolve(data)
             })
         })
     },
-    cancelorder : (orderid)=>{
-        return new Promise((resolve,reject)=>{
-            order.findByIdAndUpdate(orderid,{order:false}).then((response)=>{
-                if(response){
+    cancelorder: (orderid) => {
+        return new Promise((resolve, reject) => {
+            order.findByIdAndUpdate(orderid, { order: false }).then((response) => {
+                if (response) {
                     resolve(response)
-                }else{
+                } else {
                     response = false
                     resolve(response)
                 }
+            }).catch((err)=>{
+                reject(err)
             })
         })
     },
@@ -350,6 +372,8 @@ const obj = {
         return new Promise((resolve, reject) => {
             order.findById(orderid).populate('user').populate('address').populate('products.productid').lean().then((response) => {
                 resolve(response)
+            }).catch((err)=>{
+                reject(err)
             })
         })
     }

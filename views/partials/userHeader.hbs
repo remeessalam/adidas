@@ -34,11 +34,11 @@
 									<li class="nav-item"><a class="nav-link" href="single-blog.html">Blog Details</a></li>
 								</ul>
 							</li> --}}
-							<li class="nav-item"><a href="/wishlist" class="nav-link"><span class="bi bi-bag-heart"></span> favorite</a></li>
-							<li class="nav-item"><a href="/cart" class="nav-link"><span class="ti-bag"></span> cart</a></li>
-							<li class="nav-item"><a href="/orderdetails" class="nav-link"><span></span> order</a></li>
+							<li class="nav-item"><a href="/wishlist" class="nav-link"><span class="bi bi-bag-heart"></span>favorite <span id="wishlist"style="color:grey;"> 0</span></a></li>
+							<li class="nav-item"><a href="/cart" class="nav-link"><span class="ti-bag"></span>cart <span id="cart"style="color:grey"> 0</span></a></li>
+							<li class="nav-item"><a href="/orderdetails" class="nav-link"><span></span>order <span id="order" style="color:grey"> 0</span></a></li>
 							<li class="nav-item submenu dropdown">
-								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+								<a href="/userprofile" class="nav-link " data-toggle="dropdown" role="button" aria-haspopup="true"
 								 aria-expanded="false">
                                  
                                  {{#if users}}
@@ -49,7 +49,7 @@
                                  </a>
 								<ul class="dropdown-menu">
                                     {{#if users}}
-									<li class="nav-item"><a class="nav-link" data-toggle="modal" data-target="#exampleModal">profile</a></li>
+									<li class="nav-item"><a href="/userprofile" class="nav-link" >profile</a></li>
                                     {{else}}
                                 	<li class="nav-item"><a class="nav-link" href="/login">profile</a></li>
                                     {{/if}}
@@ -94,7 +94,7 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+{{!-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -111,15 +111,15 @@
 			
 			  <div class="col-md-4">
 				<h5>cart</h5>
-				<span class="num">10</span>
+				<span id="carts" class="num">0</span>
 			  </div>
 			  <div class="col-md-4">
 			  <h5>whishlist</h5>
-				<span class="num">10</span>
+				<span id="whishlists" class="num">0</span>
 			  </div>
 			  <div class="col-md-4">
 			  <h5>orders</h5>
-				<span class="num">10</span>
+				<span id="orders" class="num">0</span>
 			  </div>
 			
 			</div>
@@ -137,8 +137,8 @@
 			  
 			 <div class="profile mt-5">
 			 
-			 <button class="profile_button px-5" ><a href="/userprofile">view profile</a></button>
-             <button class="profile_button px-5" data-dismiss="modal">close</button>
+			 <button class="profile_button px-4"><a href="/userprofile">view profile</a></button>
+             <button class="profile_button px-3" data-dismiss="modal">close</button>
 
 		</div>
 			   
@@ -148,9 +148,22 @@
       </div>
     </div>
   </div>
-</div>
+</div> --}}
 
+<script>
+	document.addEventListener('DOMContentLoaded',cartCount)
+	function cartCount(){
+		axios.get('/alldetails').then((e)=>{
+			console.log(e)
+			console.log(e.data.details.totalcart.product.length)
+			document.getElementById('wishlist').innerHTML=e.data.details.totalwishlist.product.length
+			document.getElementById('cart').innerHTML=e.data.details.totalcart.product.length
+			document.getElementById('order').innerHTML=e.data.details.totalorders.length
+			
 
-
+		})
+	}
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <link rel="stylesheet" href="/stylesheets/modal.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">

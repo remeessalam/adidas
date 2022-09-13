@@ -1,0 +1,414 @@
+<div class="container p-5" style="height:70rem; overflow-y:scroll">
+    <div class="row" style="margin-top:10rem ">
+        <div class="col md-5">
+            <div class="card" style="width:100%; ; background:white">
+                <div class="accordion accordion-flush" id="accordionFlushExample">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="flush-headingOne">
+                            <button class="accordion-button collapsed" type="button" style="height:100px;"
+                                data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false"
+                                aria-controls="flush-collapseOne">
+                                Add Address
+                            </button>
+                        </h2>
+                        <div id="flush-collapseOne" class="accordion-collapse collapse"
+                            aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body">
+                                <form class="row contact_form" action="/profileAddAddress" id="addressvalidationinprofile" method="post"
+                                    novalidate="novalidate">
+                                    <div class="col-md-6 form-group p_star">
+                                        <input type="text" class="form-control" id="first" name="firstName"
+                                            placeholder="First name">
+                                        {{!-- <span class="placeholder" data-placeholder="First name"></span> --}}
+                                    </div>
+                                    <div class="col-md-6 form-group p_star">
+                                        <input type="text" class="form-control" id="last" name="lastName"
+                                            placeholder="Last name">
+                                        {{!-- <span class="placeholder" data-placeholder="Last name"></span> --}}
+                                    </div>
+                                    {{!-- <div class="col-md-12 form-group">
+                                        <input type="text" class="form-control" id="company" name="company"
+                                            placeholder="Company name">
+                                    </div> --}}
+                                    <div class="col-md-6 form-group p_star">
+                                        <input type="text" class="form-control" id="number" name="mobileNumber"
+                                            placeholder="Phone Number">
+                                        {{!-- <span class="placeholder" data-placeholder="Phone number"></span> --}}
+                                    </div>
+                                    {{!-- <div class="col-md-6 form-group p_star">
+                                        <input type="text" class="form-control" id="email" name="compemailany"
+                                            placeholder="Email Address">
+                                        <span class="placeholder" data-placeholder="Email Address"></span>
+                                    </div> --}}
+                                    {{!-- <div class="col-md-12 form-group p_star">
+                                        <select class="country_select">
+                                            <option value="1">Country</option>
+                                            <option value="2">Country</option>
+                                            <option value="4">Country</option>
+                                        </select>
+                                    </div> --}}
+                                    <div class="col-md-12 form-group p_star">
+                                        <input type="text" class="form-control" id="add1" name="house"
+                                            placeholder="Address">
+                                        {{!-- <span class="placeholder" data-placeholder="Address line 01"></span> --}}
+                                    </div>
+                                    <div class="col-md-12 form-group p_star">
+                                        <input type="text" class="form-control" id="add2" name="street"
+                                            placeholder="Street">
+                                        {{!-- <span class="placeholder" data-placeholder="Address line 01"></span> --}}
+                                    </div>
+                                    {{!-- <div class="col-md-12 form-group p_star">
+                                        <input type="text" class="form-control" id="add2" name="add2">
+                                        <span class="placeholder" data-placeholder="Address line 02"></span>
+                                    </div> --}}
+                                    <div class="col-md-12 form-group p_star">
+                                        <input type="text" class="form-control" id="city" name="city"
+                                            placeholder="Town/City">
+                                        {{!-- <span class="placeholder" data-placeholder="Town/City"></span> --}}
+                                    </div>
+                                    <div class="col-md-12 form-group p_star">
+                                        <input type="text" class="form-control" id="state" name="state"
+                                            placeholder="state">
+                                        {{!-- <span class="placeholder" data-placeholder="Town/City"></span> --}}
+                                    </div>
+                                    {{!-- <div class="col-md-12 form-group p_star">
+                                        <select class="country_select">
+                                            <option value="1">District</option>
+                                            <option value="2">District</option>
+                                            <option value="4">District</option>
+                                        </select>
+                                    </div> --}}
+                                    <div class="col-md-12 form-group">
+                                        <input type="number" class="form-control" id="zip" name="pincode"
+                                            placeholder="Postcode/ZIP">
+                                    </div>
+                                    {{!-- <div class="col-md-12 form-group">
+                                        <div class="creat_account">
+                                            <input type="checkbox" id="f-option2" name="selector">
+                                            <label for="f-option2">Create an account?</label>
+                                        </div>
+                                    </div> --}}
+                                    <div class="col-md-12 form-group">
+                                        <button type="submit" class="btn btn-dark">Add</button>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    {{#each address}}
+                    <div class="accordion-item m-3">
+                        <p class="accordion-header " id="flush-headingTwo">
+                            {{!-- <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#flush-collapseTwo" aria-expanded="false" style="height:150px;"
+                                aria-controls="flush-collapseTwo"> --}}
+
+                                <p>
+                                    {{this.firstName}} {{this.lastName}}<br>
+                                    {{this.house}},
+                                    {{this.street}},
+                                    {{this.city}},
+                                    {{this.state}}<br>
+                                    {{this.pincode}}
+                                </p>
+                                {{!-- <a href="/editaddress/{{this._id}}"
+                                    style="text-decoration: none; color:rgb(97, 104, 97)"><i
+                                        class="bi bi-pencil-square"></i> edit</a> --}}
+                                <button style="border:none;background:none" data-bs-toggle="collapse"
+                                    data-bs-target="#flush-collapseTwo{{this._id}}" id="flush-headingTwo{{this._id}}"><a
+                                        style="text-decoration: none; color:rgb(97, 104, 97)"><i
+                                            class="bi bi-pencil-square"></i> edit</a></button>
+                                <a href="/removeaddress/{{this._id}}"
+                                    style="text-decoration: none; color:rgb(115, 108, 108)" onclick="return confirm('Are you sure to delete address..?')"><i class="bi bi-trash"></i>
+                                    deletes</a>
+
+                        </p>
+                        <div id="flush-collapseTwo{{this._id}}" class="accordion-collapse collapse"
+                            aria-labelledby="flush-headingTwo{{this._id}}" data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body" style="background:white">
+                          {{!-- form started --}}
+                                <form class="row contact_form" action="/editaddress" id="editaddressvalidationinprofile" method="post"
+                                    novalidate="novalidate">
+                                    <div class="col-md-6 form-group p_star">
+                                        <input type="text" class="form-control" id="first" name="firstName"
+                                            placeholder="First name" value="{{this.firstName}}">
+                                        {{!-- <span class="placeholder" data-placeholder="First name"></span> --}}
+                                    </div>
+                                    <div class="col-md-6 form-group p_star">
+                                        <input type="text" class="form-control" id="last" name="lastName"
+                                            placeholder="Last name" value="{{this.lastName}}">
+                                        {{!-- <span class="placeholder" data-placeholder="Last name"></span> --}}
+                                    </div>
+                                    {{!-- <div class="col-md-12 form-group">
+                                        <input type="text" class="form-control" id="company" name="company"
+                                            placeholder="Company name">
+                                    </div> --}}
+                                    <div class="col-md-6 form-group p_star">
+                                        <input type="text" class="form-control" id="number" name="mobileNumber"
+                                            placeholder="Phone Number" value="{{this.mobileNumber}}">
+                                        {{!-- <span class="placeholder" data-placeholder="Phone number"></span> --}}
+                                    </div>
+                                    {{!-- <div class="col-md-6 form-group p_star">
+                                        <input type="text" class="form-control" id="email" name="compemailany"
+                                            placeholder="Email Address">
+                                        <span class="placeholder" data-placeholder="Email Address"></span>
+                                    </div> --}}
+                                    {{!-- <div class="col-md-12 form-group p_star">
+                                        <select class="country_select">
+                                            <option value="1">Country</option>
+                                            <option value="2">Country</option>
+                                            <option value="4">Country</option>
+                                        </select>
+                                    </div> --}}
+                                    <div class="col-md-12 form-group p_star">
+                                        <input type="text" class="form-control" id="add1" name="house"
+                                            placeholder="Address" value="{{this.house}}">
+                                        {{!-- <span class="placeholder" data-placeholder="Address line 01"></span> --}}
+                                    </div>
+                                    <div class="col-md-12 form-group p_star">
+                                        <input type="text" class="form-control" id="add2" name="street"
+                                            placeholder="Street" value="{{this.street}}">
+                                        {{!-- <span class="placeholder" data-placeholder="Address line 01"></span> --}}
+                                    </div>
+                                    {{!-- <div class="col-md-12 form-group p_star">
+                                        <input type="text" class="form-control" id="add2" name="add2">
+                                        <span class="placeholder" data-placeholder="Address line 02"></span>
+                                    </div> --}}
+                                    <div class="col-md-12 form-group p_star">
+                                        <input type="text" class="form-control" id="city" name="city"
+                                            placeholder="Town/City" value="{{this.city}}">
+                                        {{!-- <span class="placeholder" data-placeholder="Town/City"></span> --}}
+                                    </div>
+                                    <div class="col-md-12 form-group p_star">
+                                        <input type="text" class="form-control" id="state" name="state"
+                                            placeholder="state" value="{{this.state}}">
+                                        {{!-- <span class="placeholder" data-placeholder="Town/City"></span> --}}
+                                    </div>
+                                    {{!-- <div class="col-md-12 form-group p_star">
+                                        <select class="country_select">
+                                            <option value="1">District</option>
+                                            <option value="2">District</option>
+                                            <option value="4">District</option>
+                                        </select>
+                                    </div> --}}
+                                    <div class="col-md-12 form-group">
+                                        <input type="number" class="form-control" id="zip" name="pincode"
+                                            placeholder="Postcode/ZIP" value="{{this.pincode}}">
+                                    </div>
+                                    <input type="text" class="form-control" id="id" name="id"
+                                            placeholder="Postcode/ZIP" value="{{this._id}}" hidden>
+                                    {{!-- <div class="col-md-12 form-group">
+                                        <div class="creat_account">
+                                            <input type="checkbox" id="f-option2" name="selector">
+                                            <label for="f-option2">Create an account?</label>
+                                        </div>
+                                    </div> --}}
+                                    <div class="col-md-12 form-group">
+                                        <button type="submit" class="btn btn-dark">Edit</button>
+                                        <button type="button" class="btn btn-dark" data-bs-toggle="collapse"
+                                            data-bs-target="#flush-collapseTwo{{this._id}}"
+                                            id="flush-headingTwo{{this._id}}">Cancel</button>
+                                    </div>
+
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+<!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+
+
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+    crossorigin="anonymous"></script>
+
+
+     <script>
+ $().ready(function () {
+ 
+            $("#addressvalidationinprofile").validate({
+                // in 'rules' user have to specify all the constraints for respective fields
+                rules: {
+                    firstName: {
+                        required:true
+                        },
+                    lastName: {
+                        required:true
+                        },
+                    mobileNumber: {
+                        required: true,
+                         minlength:10,
+                         maxlength:10
+                    },
+                    house: {
+                        required: true,
+                        minlength: 3
+                    },
+                    street: {
+                        required: true,
+                        minlength: 3,
+                    },
+                    city: {
+                        required: true,
+                        minlength: 3,
+                    },
+                    state: {
+                    required:true,
+                    minlength:3,
+                    },
+                    pincode: {
+                        required: true,
+                        minlength: 6,
+                        maxlength: 6
+                    },
+                    agree: "required"
+                },
+                // in 'messages' user have to specify message as per rules
+                messages: {
+                    firstName:{
+                        required: 'enter firstname'
+                    },
+                    lastName: {
+                        required:"enter lastname"
+                        },
+                    mobileNumber: {
+                        required:'enter your mobile number',
+                        minlength:'enter 10 digits',
+                        maxlength:'more than 10'
+                    },
+                    house: {
+                        required: " please fill up this feild",
+                        minlength: " Your password must be consist of at least 3 characters"
+                    },
+                    street: {
+                        required: " please fill up this feild",
+                        minlength: " Your  must be consist of at least 3 characters",
+            
+                    },
+                    city:{
+                        required:" please fill up this feild",
+                        minlength: " Your  must be consist of at least 3 characters",
+                    },
+                    state:{
+                        required:" please fill up this feild",
+                        minlength: " Your  must be consist of at least 3 characters",
+                    },
+                    pincode: {
+                        required: " please fill up this feild",
+                        minlength: " Your  must be consist of at least 6 characters",
+                        maxlength: " Your  must be consist of at least 6 characters"
+                    },
+                    agree: "Please accept our policy"
+                }
+            });
+        });
+    
+    $().ready(function () {
+ 
+            $("#editaddressvalidationinprofile").validate({
+                // in 'rules' user have to specify all the constraints for respective fields
+                rules: {
+                    firstName: {
+                        required:true
+                        },
+                    lastName: {
+                        required:true
+                        },
+                    mobileNumber: {
+                        required: true,
+                         minlength:10,
+                         maxlength:10
+                    },
+                    house: {
+                        required: true,
+                        minlength: 3
+                    },
+                    street: {
+                        required: true,
+                        minlength: 3,
+                    },
+                    city: {
+                        required: true,
+                        minlength: 3,
+                    },
+                    state: {
+                    required:true,
+                    minlength:3,
+                    },
+                    pincode: {
+                        required: true,
+                        minlength: 6,
+                        maxlength: 6
+                    },
+                    agree: "required"
+                },
+                // in 'messages' user have to specify message as per rules
+                messages: {
+                    firstName:{
+                        required: 'enter firstname'
+                    },
+                    lastName: {
+                        required:"enter lastname"
+                        },
+                    mobileNumber: {
+                        required:'enter your mobile number',
+                        minlength:'enter 10 digits',
+                        maxlength:'more than 10'
+                    },
+                    house: {
+                        required: " please fill up this feild",
+                        minlength: " Your password must be consist of at least 3 characters"
+                    },
+                    street: {
+                        required: " please fill up this feild",
+                        minlength: " Your  must be consist of at least 3 characters",
+            
+                    },
+                    city:{
+                        required:" please fill up this feild",
+                        minlength: " Your  must be consist of at least 3 characters",
+                    },
+                    state:{
+                        required:" please fill up this feild",
+                        minlength: " Your  must be consist of at least 3 characters",
+                    },
+                    pincode: {
+                        required: " please fill up this feild",
+                        minlength: " Your  must be consist of at least 6 characters",
+                        maxlength: " Your  must be consist of at least 6 characters"
+                    },
+                    agree: "Please accept our policy"
+                }
+            });
+        });
+    {{!-- $().ready(function () {
+        $("#addressvalidation").validate({
+            rules: {
+
+            }
+             messages: {
+
+             }
+        })
+    }) --}}
+
+
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
