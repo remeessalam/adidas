@@ -19,6 +19,8 @@ module.exports = {
             userschema.findOneAndUpdate({ _id: userId }, { $set: { status: 'blocked' } }).then((response) => {
                 console.log('user blocked')
                 resolve(response)
+            }).catch((error) =>{
+                reject(error)
             })
         })
     },
@@ -27,6 +29,8 @@ module.exports = {
             userschema.findOneAndUpdate({ _id: userId }, { $set: { status: 'active' } }).then((response) => {
                 console.log('user active')
                 resolve(response)
+            }).catch((error) =>{
+                reject(error)
             })
         })
     }, userview: (userId) => {
@@ -38,6 +42,8 @@ module.exports = {
                     resolve(response)
                 }
 
+            }).catch((err)=>{
+                reject(err)
             })
         })
     }, edituser: (userid,edited) => {
@@ -55,7 +61,7 @@ module.exports = {
     },
     getorders: () => {
         return new Promise((resolve, reject) => {
-            order.find().populate('user').populate('products.productid').populate('address').lean().then((response) => {
+            order.find().sort('-createdAt').populate('user').populate('products.productid').populate('address').lean().then((response) => {
                 resolve(response)
             })
         })
@@ -64,6 +70,8 @@ module.exports = {
         return new Promise((resolve, reject) => {
             order.findById(orderid).populate('user').populate('products.productid').populate('address').lean().then((response) => {
                 resolve(response)
+            }).catch((err) => {
+                reject(err)
             })
         })
     },

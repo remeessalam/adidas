@@ -32,7 +32,7 @@
                     <tbody>
                         {{#each data}}
                         <tr>
-                            <td>{{@index}}</td>
+                            <td>{{inc @index}}</td>
                             <td>{{this.couponCode}}</td>
                             <td>{{this.discription}}</td>
                             <td>{{this.discount}}</td>
@@ -71,11 +71,11 @@
                         <div class="col md-6">
 
                             <label for="text">coupon code</label>
-                            <input type="text" name="couponCode" class="form-control mb-1" placeholder="heading">
+                            <input type="text" name="couponCode" class="form-control mb-1" placeholder="coupon code">
                             <label for="text">discription</label>
-                            <input type="text" name="discription" class="form-control mb-1" placeholder="about">
+                            <input type="text" name="discription" class="form-control mb-1" placeholder="discription">
                             <label for="text">discount %</label>
-                            <input type="text" name="discount" class="form-control mb-1" placeholder="about">
+                            <input type="text" name="discount" class="form-control mb-1" placeholder="discount">
                         </div>
                         <div class="col md-6">
                             <button type="submit" class="btn btn-success mt-4">submit</button>

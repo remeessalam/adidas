@@ -57,6 +57,8 @@ module.exports = {
                 } else {
                     console.log('product not edited');
                 }
+            }).catch((err)=>{
+                reject(err)
             })
         })
 
@@ -67,6 +69,8 @@ module.exports = {
             products.findByIdAndDelete(proId).then((response) => {
                 console.log('product removed')
                 resolve(response)
+            }).catch((err)=>{
+                reject(err)
             })
         })
     },
@@ -153,6 +157,8 @@ module.exports = {
             coupon.findByIdAndDelete(id).then((data)=>{
                 console.log('deleted coupon')
                 resolve(data)
+            }).catch((err)=>{
+                next(err)
             })
         })
     }

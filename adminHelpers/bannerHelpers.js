@@ -30,6 +30,8 @@ module.exports = {
             banner.findByIdAndDelete(banid).then((data)=>{
                 console.log('banner deleted')
                 resolve(data)
+            }).catch((err)=>{
+                reject(err)
             })
         })
     },
@@ -38,6 +40,8 @@ module.exports = {
             banner.findByIdAndUpdate(banid,bandetails).then((data)=>{
                 resolve(data)
                 console.log('updated banner')
+            }).catch((err)=>{
+                reject(err)
             })
         })
     }  

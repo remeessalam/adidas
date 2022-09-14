@@ -5,7 +5,11 @@
 	  {{!-- <p class="textA">Page Not Found</p>
   <p class="textB">404</p>
   <a class="textC" href="/">Go Back</a> --}}
+  {{#if err.admin}}
+  <a class="btn btn-dark" href="/admin">admin home</a>
+  {{else}}
   <a class="btn btn-dark" href="/">home</a>
+  {{/if}}
 	<svg class="page-not-found" viewBox="0 0 1280 1024">
 		  <title>Page Not Found</title>
 		    <g class="hide tri-dots">

@@ -41,7 +41,7 @@
           <tbody>
             {{#each response}}
             <tr>
-              <td>{{@index}}</td>
+              <td>{{inc @index}}</td>
               <td>{{this.payment}}</td>
               <td>{{date this.createdAt}}</td>
               <td>{{this.status}}</td>

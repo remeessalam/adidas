@@ -76,21 +76,26 @@ router.get('/usermanagment', verifyadmin, (req, res) => {
     res.render('admin/adminusermanagment', { allusers, admins, admin: true })
 
   })
-  router.get('/blockuser/:id', verifyadmin, (req, res) => {
+})
+  router.get('/blockuser/:id', verifyadmin, (req, res,next) => {
     let userId = req.params.id
     console.log(userId)
     userdetails.blockuser(userId).then((response) => {
       res.json({ response })
+    }).catch((err)=>{
+      next()
     })
   })
-  router.get('/unblockuser/:id', verifyadmin, (req, res) => {
+  router.get('/unblockuser/:id', verifyadmin, (req, res,next) => {
     let userId = req.params.id
     console.log(userId)
     userdetails.unblockuser(userId).then((response) => {
       res.json({ response })
+    }).catch((err)=>{
+      next()
     })
   })
-  router.get('/viewuser/:id', verifyadmin, (req, res) => {
+  router.get('/viewuser/:id', verifyadmin, (req, res,next) => {
     let user = req.params.id
     let admins = req.session.admindetails
     console.log(user)
@@ -98,10 +103,11 @@ router.get('/usermanagment', verifyadmin, (req, res) => {
       console.log(response)
       let users = response
       res.render('admin/adminuserview', { users, admins, admin: true })
+    }).catch((err)=>{
+      next()
     })
-
   })
-})
+// })
 router.get('/adminlogin', (req, res) => {
   if (req.session.admin) {
     res.redirect('/admin/')
@@ -146,18 +152,19 @@ router.post('/addproducts', verifyadmin, (req, res) => {
   })
   res.redirect('/admin/allproducts')
 })
-router.get('/viewproduct/:id', verifyadmin, (req, res) => {
+router.get('/viewproduct/:id', verifyadmin, (req, res,next) => {
   let admins = req.session.admindetails
   let proId = req.params.id
   productdetails.viewproduct(proId).then((data) => {
     if (data) {
       console.log(data)
       res.render('admin/viewproduct', { data, admins, admin: true })
-
     }
+  }).catch((err)=>{
+    next()
   })
 })
-router.get('/editproduct/:id', verifyadmin, (req, res) => {
+router.get('/editproduct/:id', verifyadmin, (req, res,next) => {
   let proId = req.params.id
   let admins = req.session.admindetails
   productdetails.viewproduct(proId).then((data) => {
@@ -165,9 +172,11 @@ router.get('/editproduct/:id', verifyadmin, (req, res) => {
       console.log(data)
       res.render('admin/editproduct', { data, admins, admin: true })
     }
+  }).catch((err)=>{
+    next()
   })
 })
-router.post('/editproduct/:id', verifyadmin, (req, res) => {
+router.post('/editproduct/:id', verifyadmin, (req, res,next) => {
   console.log(req.params.id)
   let proedit = req.body
   let proId = req.params.id
@@ -182,13 +191,17 @@ router.post('/editproduct/:id', verifyadmin, (req, res) => {
 
       res.redirect('/admin/viewproduct/' + proId)
     }
+  }).catch((err)=>{
+    next()
   })
 })
-router.get('/deleteproduct/:id', verifyadmin, (req, res) => {
+router.get('/deleteproduct/:id', verifyadmin, (req, res,next) => {
   let proId = req.params.id
   console.log(proId)
   productdetails.deleteproduct(proId).then((response) => {
     res.redirect('/admin/allproducts/')
+  }).catch((err)=>{
+    next()
   })
 })
 router.post('/addbanner', verifyadmin, (req, res) => {
@@ -206,19 +219,24 @@ router.get('/banner', verifyadmin, (req, res) => {
       res.render('admin/banner', { products, data, admins, admin: true })
     })
   })
-  router.post('/updatebanner/:id', verifyadmin, (req, res) => {
+})
+  router.post('/updatebanner/:id', verifyadmin, (req, res,next) => {
     banner.editbanner(req.params.id, req.body).then((data) => {
       console.log(data)
       res.redirect('/admin/banner')
+    }).catch((err) => {
+      next()
     })
   })
-  router.get('/deletebanner/:id', verifyadmin, (req, res) => {
+  router.get('/deletebanner/:id', verifyadmin, (req, res,next) => {
     banner.deletebanner(req.params.id).then((data) => {
       console.log('returned to admin page')
       res.redirect('/admin/banner')
+    }).catch((err) => {
+      next()
     })
   })
-})
+// })
 router.get('/category', verifyadmin, (req, res) => {
   let admins = req.session.admindetails
   productdetails.getcategory().then((category) => {
@@ -255,12 +273,14 @@ router.post('/addcoupon', verifyadmin, (req, res) => {
     res.redirect('/admin/coupon')
   })
 })
-router.get('/deletecoupon/:id', verifyadmin, (req, res) => {
+router.get('/deletecoupon/:id', verifyadmin, (req, res,next) => {
   productdetails.deletecoupon(req.params.id).then((data) => {
     console.log('deleted')
     if (data) {
       res.redirect('/admin/coupon')
     }
+  }).catch((err)=>{
+    next()
   })
 })
 router.get('/orders', verifyadmin, (req, res) => {
@@ -270,12 +290,14 @@ router.get('/orders', verifyadmin, (req, res) => {
     res.render('admin/userOrders', { response, admins, admin: true })
   })
 })
-router.get('/orderDetails/:id', verifyadmin, (req, res) => {
+router.get('/orderDetails/:id', verifyadmin, (req, res,next) => {
   let admins = req.session.admindetails
   console.log(req.params.id)
   userdetails.viewOrder(req.params.id).then((order) => {
     console.log(order)
     res.render('admin/orderDetails', { order, admins, admin: true })
+  }).catch((err) => {
+    next()
   })
 })
 router.post('/changestatus', verifyadmin, (req, res) => {
@@ -289,6 +311,11 @@ router.post('/changestatus', verifyadmin, (req, res) => {
     }
 
   })
+})
+router.use((req,res,next)=>{
+  let err = {}
+  err.admin = true
+  next(err)
 })
 module.exports = router;
 

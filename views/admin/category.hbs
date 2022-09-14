@@ -23,15 +23,15 @@
                     <tr>
                         <th scope="col">No</th>
                         <th scope="col">Categoryname</th>
-                        <th scope="col">id</th>
+                        {{!-- <th scope="col">id</th> --}}
                     </tr> 
                 </thead>
                 <tbody>
                     {{#each category}}
                     <tr>
-                        <td>{{@index}}</td>
+                        <td>{{inc @index}}</td>
                         <td>{{this.categoryname}}</td>
-                        <td>{{this._id}} $</td>
+                        {{!-- <td>{{this._id}} $</td> --}}
 
                         {{!-- <td><img src="/productimage/{{this.image}}" alt=""></td> --}}
                     </tr>
