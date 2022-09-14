@@ -41,3 +41,57 @@
 			</div>
     </div>
 </div>
+
+
+
+
+
+<script>
+	const myEvent = async (id) => {
+		console.log('hai')
+		const res = await axios.get(`/addcart/${id}`).then((e) => {
+			console.log(e)
+			if (e.data.status) {
+				swal({
+					title: "Add To Cart!",
+					icon: "success",
+				});
+				cartCount()
+			}
+			else {
+				swal({
+					title: "product in cart!",
+					icon: "info",
+				})
+			}
+		})
+	}
+	const addwishList = (id)=>{
+			console.log('hai')
+			console.log(id)
+			axios.get(`/addwishlist/${id}`).then((e) => {
+				console.log(e)
+
+				if (e.data.status) {
+					swal({
+						title: "Add To Favorite!",
+						icon: "success",
+					});
+					cartCount()
+				}
+				else {
+					swal({
+						title: "Product Already In Favorite!",
+						icon: "info",
+					})
+				}
+			})
+	}
+
+
+    </script>
+
+
+
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
