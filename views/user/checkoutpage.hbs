@@ -3,6 +3,11 @@
 
 <section class="checkout_area section_gap" style="margin-top:10rem ;">
     <div class="container">
+        {{#if address}}
+        <h3>hi {{users.fname}}</h3>
+        {{else}}
+        <h3>Add Address</h3>
+        {{/if}}
         <div class="billing_details">
             <div class="row">
                 <div class="col-lg-8">
@@ -159,7 +164,11 @@
                             <label for="f-option4">I’ve read and accept the </label>
                             <a href="#">terms & conditions*</a>
                         </div> --}}
+                        {{#if address}}
                         <button class="btn btn-warning" style="border: o;" onclick="goaxios('{{data._id}}','{{totalamount}}','{{discount}}')">Proceed To Order</button>
+                        {{else}}
+                        <h2>Enter Address</h2>
+                        {{/if}}
                     </div>
                 </div>
             </div>

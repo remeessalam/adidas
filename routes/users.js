@@ -428,8 +428,9 @@ router.post('/checkCoupon', verifylogin, (req, res, next) => {
 })
 router.post('/checkoutorder', verifylogin, (req, res, next) => {
   try {
+    
     let users = req.session.users
-    console.log(req.body)
+    console.log(req.body,'------checkout request body')
     cart.addorder(req.body, users._id).then(async (order) => {
       console.log(order)
 
@@ -445,6 +446,7 @@ router.post('/checkoutorder', verifylogin, (req, res, next) => {
         })
       }
     })
+  
   } catch {
     next(err)
   }

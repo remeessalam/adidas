@@ -33,9 +33,9 @@
 							 class="reduced items-count" type="button"><i class="lnr lnr-chevron-down"></i></button>
 						</div> --}}
 						<div class="card_area d-flex align-items-center">
-							<a class="primary-btn" href="#">Add to Cart</a>
+							<a class="primary-btn" href="javascript:;" onclick="myEvent('{{data._id}}')">Add to Cart</a>
 							{{!-- <a class="icon_btn" href="#"><i class="lnr lnr lnr-diamond"></i></a> --}}
-							<a class="icon_btn" href="#"><i class="lnr lnr lnr-heart"></i></a>
+							<a class="icon_btn" href="javascript:;" onclick="addwishList('{{data._id}}')" ><i class="lnr lnr lnr-heart"></i></a>
 						</div>
 						<div class="s_product_text"><p>{{data.about}}</p></div>
 					</div>
@@ -505,3 +505,53 @@
 			</div>
 		</div>
 	</section> --}}
+
+
+
+
+	<script>
+	const myEvent = async (id) => {
+		console.log('hai')
+		const res = await axios.get(`/addcart/${id}`).then((e) => {
+			console.log(e)
+			if (e.data.status) {
+				swal({
+					title: "Add To Cart!",
+					icon: "success",
+				});
+				cartCount()
+			}
+			else {
+				swal({
+					title: "product in cart!",
+					icon: "info",
+				})
+			}
+		})
+	}
+	const addwishList = (id)=>{
+			console.log('hai')
+			console.log(id)
+			axios.get(`/addwishlist/${id}`).then((e) => {
+				console.log(e)
+
+				if (e.data.status) {
+					swal({
+						title: "Add To Favorite!",
+						icon: "success",
+					});
+					cartCount()
+				}
+				else {
+					swal({
+						title: "Product Already In Favorite!",
+						icon: "info",
+					})
+				}
+			})
+	}
+	</script>
+
+
+
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
